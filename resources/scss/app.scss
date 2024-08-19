@@ -1,1 +1,57 @@
-@import '~bootstrap/scss/bootstrap'
+@import '~bootstrap/scss/bootstrap';
+@import 'partials/views/welcome.scss';
+@import 'partials/fonts/roboto.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.image_container {
+  width: 80%;
+}
+
+.button_style {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  border-radius: 100px;
+  padding: 0.5rem 0;
+}
+
+.btn_primary {
+  background-color: #65558f;
+  color: white;
+
+  a {
+    color: white;
+  }
+
+  &:hover {
+    background-color: #806bb5;
+    color: white;
+  }
+}
+
+.btn_secondary {
+  background-color: white;
+
+  a {
+    color: #65558f;
+  }
+
+  border: 1px solid #65558f;
+
+  &:hover {
+    background-color: #65558f;
+
+    a {
+      color: white;
+    }
+  }
+}
+
+.link {
+  color: #65558f;
+}
