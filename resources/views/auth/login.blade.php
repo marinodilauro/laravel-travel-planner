@@ -64,7 +64,7 @@
       <div class="my-4 row">
         <div class="col-md-6 offset-md-4">
           <button type="submit" class="btn button_style btn_primary w-100">
-            Register
+            Login
           </button>
         </div>
       </div>

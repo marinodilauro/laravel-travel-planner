@@ -13,8 +13,7 @@ class TravelController extends Controller
      */
     public function index()
     {
-        $projects = Travel::orderByDesc('id');
-        return view('user.travels.index', compact('travels'));
+        return view('user.travels.index', ['travels' => Travel::all()]);
     }
 
     /**
@@ -22,7 +21,7 @@ class TravelController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.travels.create');
     }
 
     /**
