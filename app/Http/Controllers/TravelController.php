@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\travel;
-use App\Http\Requests\StoretravelRequest;
-use App\Http\Requests\UpdatetravelRequest;
+use App\Http\Requests\StoreTravelRequest;
+use App\Http\Requests\UpdateTravelRequest;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class TravelController extends Controller
 {
@@ -21,7 +24,7 @@ class TravelController extends Controller
      */
     public function create()
     {
-        return view('user.travels.create');
+        return view('user/travels/create');
     }
 
     /**
@@ -29,7 +32,31 @@ class TravelController extends Controller
      */
     public function store(StoretravelRequest $request)
     {
-        //
+        // dd($request);
+
+        // Validate
+        $val_data = $request->validated();
+
+        $val_data['user_id'] = Auth::id();
+
+        $slug = Str::slug($request->name, '-');
+        $val_data['slug'] = $slug;
+
+        if ($request->has('photo')) {
+            $image_path = Storage::put('uploads', $val_data['photo']);
+            $val_data['photo'] = $image_path;
+        }
+
+        // Create
+        // dd($request->all(), $val_data);
+        $travel = Travel::create($val_data);
+
+        if ($request->has('technologies')) {
+            $travel->technologies();
+        }
+
+        // Redirect
+        return to_route('user.travels.index')->with('message', "New travel added succesfully!");
     }
 
     /**

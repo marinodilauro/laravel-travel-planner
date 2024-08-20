@@ -10,6 +10,8 @@ class Travel extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'name', 'slug', 'destination', 'start_date', 'end_date', 'description', 'photo'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoretravelRequest extends FormRequest
+class StoreTravelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class StoretravelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|min:5|max:150',
+            'destination' => 'required|min:2|max:150',
+            'start_date' => 'required|min:5|max:150',
+            'end_date' => 'required|min:5|max:150',
+            'description' => 'nullable|max:250',
+            'photo' => 'nullable|image|max:2000'
         ];
     }
 }

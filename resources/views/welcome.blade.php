@@ -11,7 +11,7 @@
     <h1 class="text-center roboto-bold">Welcome!</h1>
 
     <div class="image_container">
-      <img class="img-fluid" src="{{ asset('storage/img/hello.png') }}" alt="">
+      <img class="img-fluid" src="/storage/img/hello.png" alt="">
     </div>
 
     <div class="caption text-center roboto-medium p-3 mb-3">
@@ -23,11 +23,11 @@
     <div class="d-flex flex-column align-items-center gap-3 flex-row-md w-100">
 
       <button class="btn button_style btn_primary w-100">
-        <a class="text-decoration-none w-100" href="{{ route('register') }}">Create an account</a>
+        <a class="text-decoration-none d-block w-100" href="{{ route('register') }}">Create an account</a>
       </button>
 
       <button class="btn button_style btn_secondary w-100">
-        <a class="text-decoration-none w-100" href="{{ route('login') }}">Login</a>
+        <a class="text-decoration-none d-block w-100" href="{{ route('login') }}">Login</a>
       </button>
 
       <a class="link roboto-medium" href="#">Forgot password?</a>

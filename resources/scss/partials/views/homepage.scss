@@ -1,4 +1,14 @@
-.add_btn {
+.account_icon {
+  font-variation-settings: 'FILL' 1;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+}
+
+.add_btn,
+.back_btn {
   border: none;
   border-radius: 100%;
   aspect-ratio: 1;
@@ -10,4 +20,51 @@
   border: none;
   background-color: transparent;
   padding-top: 0.2rem;
+}
+
+.travel_card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #cac4d0;
+  padding: 1rem;
+
+  .card_image {
+    flex-basis: 20%;
+
+    img {
+      border-radius: 1.3rem;
+      object-fit: cover;
+    }
+  }
+
+  .card_body {
+    .travel_name {
+      font-size: 1.1rem;
+      font-weight: 450;
+    }
+
+    div {
+      font-size: 0.9rem;
+    }
+
+    .calendar_icon,
+    .destination_icon {
+      font-size: 1.3rem;
+    }
+
+    .calendar_icon {
+      font-variation-settings: 'FILL' 1;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .card_actions {
+    .actions_icon:hover {
+      cursor: pointer;
+    }
+  }
 }

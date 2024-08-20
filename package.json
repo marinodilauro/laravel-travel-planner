@@ -13,8 +13,13 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
+        "@material/web": "^2.0.0",
         "@popperjs/core": "^2.11.8",
+        "@vitejs/plugin-vue": "^5.1.2",
         "bootstrap": "^5.3.3",
-        "bootstrap-icons": "^1.11.3"
+        "bootstrap-icons": "^1.11.3",
+        "vue": "^3.4.38",
+        "vue-loader": "^17.4.2",
+        "vue-router": "^4.4.3"
     }
 }

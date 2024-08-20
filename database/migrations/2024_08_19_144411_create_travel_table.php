@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
-            $table->string('name');
+            $table->string('name', 150);
             $table->string('slug', 50)->nullable();
+            $table->string('destination', 150);
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('description')->nullable();
+            $table->text('description', 250)->nullable();
             $table->string('photo', 255)->nullable();
 
             // Definire la chiave esterna
