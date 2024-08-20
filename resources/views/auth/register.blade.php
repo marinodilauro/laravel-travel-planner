@@ -9,7 +9,7 @@
 @section('content')
   <div class="container d-flex flex-column align-items-center">
 
-    <h1 class="text-center roboto-bold">Register</h1>
+    <h1 class="text-center roboto-bold">Login</h1>
 
     <div class="image_container">
       <img class="img-fluid" src="{{ asset('storage/img/hello.png') }}" alt="">
@@ -18,7 +18,7 @@
     <form method="POST" action="{{ route('register') }}" class="w-100">
       @csrf
 
-      <div class="input_wrapper mb-4">
+      <div class="input_wrapper mb-4 row">
         <label for="first_name" class="input_label">{{ __('First name') }}</label>
 
         <div class="col-md-6">
@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <div class="input_wrapper mb-4">
+      <div class="input_wrapper mb-4 row">
         <label for="last_name" class="input_label">{{ __('Last name') }}</label>
 
         <div class="col-md-6">
@@ -48,7 +48,7 @@
         </div>
       </div>
 
-      <div class="input_wrapper mb-4">
+      <div class="input_wrapper mb-4 row">
         <label for="email" class="input_label">{{ __('E-mail') }}</label>
 
         <div class="col-md-6">
@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      <div class="input_wrapper mb-4">
+      <div class="input_wrapper mb-4 row">
         <label for="password" class="input_label">{{ __('Password') }}</label>
 
         <div class="col-md-6">
@@ -78,7 +78,7 @@
         </div>
       </div>
 
-      <div class="input_wrapper mb-5">
+      <div class="input_wrapper mb-5 row">
         <label for="password-confirm" class="input_label">{{ __('Confirm Password') }}</label>
 
         <div class="col-md-6">
