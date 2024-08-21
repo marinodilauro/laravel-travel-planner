@@ -25,39 +25,41 @@
 .travel_card {
   display: flex;
   align-items: center;
-  gap: 1rem;
   border-bottom: 1px solid #cac4d0;
   padding: 1rem;
+  text-decoration: none;
 
-  .card_image {
-    flex-basis: 20%;
+  a {
+    .card_image {
+      flex-basis: 25%;
 
-    img {
-      border-radius: 1.3rem;
-      object-fit: cover;
-    }
-  }
-
-  .card_body {
-    .travel_name {
-      font-size: 1.1rem;
-      font-weight: 450;
+      img {
+        border-radius: 1.3rem;
+        object-fit: cover;
+      }
     }
 
-    div {
-      font-size: 0.9rem;
-    }
+    .card_body {
+      .travel_name {
+        font-size: 1.1rem;
+        font-weight: 450;
+      }
 
-    .calendar_icon,
-    .destination_icon {
-      font-size: 1.3rem;
-    }
+      div {
+        font-size: 0.9rem;
+      }
 
-    .calendar_icon {
-      font-variation-settings: 'FILL' 1;
+      .calendar_icon,
+      .destination_icon {
+        font-size: 1.3rem;
+      }
 
-      &:hover {
-        cursor: pointer;
+      .calendar_icon {
+        font-variation-settings: 'FILL' 1;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }

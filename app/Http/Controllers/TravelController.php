@@ -62,15 +62,15 @@ class TravelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(travel $travel)
+    public function show(Travel $travel)
     {
-        //
+        return view('user.travels.show', compact('travel'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(travel $travel)
+    public function edit(Travel $travel)
     {
         //
     }
@@ -78,7 +78,7 @@ class TravelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatetravelRequest $request, travel $travel)
+    public function update(UpdateTravelRequest $request, Travel $travel)
     {
         //
     }
@@ -86,7 +86,7 @@ class TravelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(travel $travel)
+    public function destroy(Travel $travel)
     {
         //
     }

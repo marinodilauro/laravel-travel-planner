@@ -1,6 +1,6 @@
+@use './partials/variables' as *;
 @import '~bootstrap/scss/bootstrap';
-@import 'partials/views/welcome.scss';
-@import 'partials/fonts/roboto.scss';
+@import './partials/fonts/roboto.scss';
 
 * {
   margin: 0;
@@ -25,7 +25,7 @@ body {
 }
 
 .btn_primary {
-  background-color: #65558f;
+  background-color: $color-accent;
   color: white;
 
   a {
@@ -33,7 +33,7 @@ body {
   }
 
   &:hover {
-    background-color: #806bb5;
+    background-color: $color-accent;
     color: white;
   }
 }
@@ -42,13 +42,18 @@ body {
   background-color: white;
 
   a {
-    color: #65558f;
+    color: $color-accent;
+    color: white;
+    ;
   }
 
-  border: 1px solid #65558f;
+  border: 1px solid $color-accent;
+  color: white;
+  ;
 
   &:hover {
-    background-color: #65558f;
+    background-color: $color-accent;
+    ;
 
     a {
       color: white;
@@ -57,5 +62,5 @@ body {
 }
 
 .link {
-  color: #65558f;
+  color: $color-accent;
 }

@@ -28,7 +28,7 @@
     @vite(['resources/js/app.js'])
 
     <!-- Include global styles -->
-    @vite('resources/css/app.scss')
+    @vite('resources/scss/app.scss')
 
     <!-- Include page-specific styles -->
     @yield('styles')

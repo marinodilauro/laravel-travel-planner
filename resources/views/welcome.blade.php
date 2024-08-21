@@ -2,10 +2,6 @@
 
 @section('title', 'Welcome Page')
 
-@section('styles')
-  @vite('resources/scss/partials/views/welcome.scss')
-@endsection
-
 @section('content')
   <div class="container d-flex flex-column align-items-center">
     <h1 class="text-center roboto-bold">Welcome!</h1>

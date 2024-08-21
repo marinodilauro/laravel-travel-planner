@@ -62,35 +62,38 @@
       <div class="col">
         <div class="travel_card">
 
-          {{-- Card image --}}
-          <div class="card_image">
-            @if ($travel->photo)
-              <img class="img-fluid" loading="lazy" src="{{ asset('storage/' . $travel->photo) }}" alt="">
-            @else
-              <img class="img-fluid" loading="lazy" src="/storage/img/placeholder_image.png" alt="">
-            @endif
-          </div>
-
-          {{-- Card body --}}
-          <div class="card_body d-flex flex-column flex-fill">
-            <span class="travel_name">
-              {{ $travel->name }}
-            </span>
-
-            <div class="d-flex flex-column gap-1">
-              <div class="roboto-regular d-flex justify-content-start align-items-center">
-                <span class="destination_icon material-symbols-outlined me-1">sell</span>
-                <span class="text-secondary">{{ $travel->destination }}</span>
-              </div>
-
-              <div class="roboto-regular d-flex justify-content-start align-items-center">
-                <span class="calendar_icon material-symbols-outlined me-1">today</span>
-                <span class="text-secondary">{{ $travel->start_date }} &bullet; {{ $travel->end_date }}</span>
-                </span>
-              </div>
+          <a class="d-flex gap-3 text-decoration-none text-dark p-0 flex-fill"
+            href="{{ route('user.travels.show', $travel) }}">
+            {{-- Card image --}}
+            <div class="card_image">
+              @if ($travel->photo)
+                <img class="img-fluid" loading="lazy" src="{{ asset('storage/' . $travel->photo) }}" alt="">
+              @else
+                <img class="img-fluid" loading="lazy" src="/storage/img/placeholder_image.png" alt="">
+              @endif
             </div>
 
-          </div>
+            {{-- Card body --}}
+            <div class="card_body d-flex flex-column justify-content-between flex-fill">
+              <span class="travel_name">
+                {{ $travel->name }}
+              </span>
+
+              <div class="d-flex flex-column gap-1">
+                <div class="roboto-regular d-flex justify-content-start align-items-center">
+                  <span class="destination_icon material-symbols-outlined me-1">location_on</span>
+                  <span class="text-secondary">{{ $travel->destination }}</span>
+                </div>
+
+                <div class="roboto-regular d-flex justify-content-start align-items-center">
+                  <span class="calendar_icon material-symbols-outlined me-1">today</span>
+                  <span class="text-secondary">{{ $travel->start_date }} &bullet; {{ $travel->end_date }}</span>
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </a>
 
           {{-- Card actions --}}
           <div class="card_actions">
