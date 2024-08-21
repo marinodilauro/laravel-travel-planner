@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateTravelRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class TravelController extends Controller
 {
@@ -64,7 +65,12 @@ class TravelController extends Controller
      */
     public function show(Travel $travel)
     {
-        return view('user.travels.show', compact('travel'));
+        // Calcola la durata del viaggio in giorni
+        $start_date = Carbon::parse($travel->start_date);
+        $end_date = Carbon::parse($travel->end_date);
+        $duration = $end_date->diffInDays($start_date) + 1;
+
+        return view('user.travels.show', compact('travel', 'duration'));
     }
 
     /**

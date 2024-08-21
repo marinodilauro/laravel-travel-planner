@@ -6,6 +6,11 @@
   width: 100%;
   background-color: #dadce0;
 
+  .title_bar {
+    position: absolute;
+    z-index: 4;
+  }
+
   img {
     position: absolute;
     z-index: 2;
@@ -23,9 +28,9 @@
     background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent 50%);
   }
 
-  .travel_details {
+  .chips {
     position: absolute;
-    top: 53%;
+    top: 56%;
     z-index: 4;
     display: flex;
     flex-wrap: wrap;
@@ -47,7 +52,7 @@
       .calendar_icon,
       .destination_icon {
         font-size: 1.3rem;
-        color: $color-accent;
+        color: $color-primary;
       }
 
       .calendar_icon {
@@ -57,9 +62,80 @@
   }
 }
 
+.top_bar {
+  .title {
+    font-size: 1.1rem;
+  }
+}
+
+.accordion {
+  width: 100%;
+  margin-bottom: 1rem;
 
 
-/* Inside auto layout */
-/*     flex: none;
-    order: 0;
-    flex-grow: 0; */
+  .accordion_item {
+    .accordion_header {
+      font-weight: 500;
+      color: #49454F;
+    }
+
+    .accordion_content {
+      max-height: 0;
+      overflow: hidden;
+      font-size: 0.9rem;
+      transition: all 0.5s ease-in-out;
+    }
+
+    &.active .accordion_content {
+      max-height: 200px;
+    }
+
+    &.active .triangle_icon {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.week_days {
+  display: flex;
+  flex-wrap: wrap;
+
+
+  .day_badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #79747E;
+    border-radius: 8px;
+    padding: 0.2rem 0rem;
+    font-size: 0.9rem;
+    font-weight: 450;
+
+    &.selected {
+      background-color: $color-secondary;
+    }
+  }
+}
+
+#day_label {
+  font-weight: 500;
+  color: #49454F;
+}
+
+.days_title {
+  font-weight: 500;
+  color: #49454F;
+}
+
+#week-selector {
+  border: none;
+  font-weight: 500;
+  color: #49454F;
+  margin: 0 0 1rem -0.3rem;
+
+  &:focus-visible {
+    border: none;
+    outline: none;
+  }
+
+}

@@ -33,6 +33,8 @@
     <!-- Include page-specific styles -->
     @yield('styles')
 
+    <!-- Include page-specific scripts -->
+    @yield('scripts')
   </head>
 
   <body>

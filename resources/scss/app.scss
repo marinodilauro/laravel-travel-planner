@@ -12,8 +12,30 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.add_btn,
+.back_btn {
+  border: none;
+  border-radius: 100%;
+  aspect-ratio: 1;
+  background-color: transparent;
+  padding-top: 0.5rem;
+}
+
 .image_container {
   width: 80%;
+}
+
+.account_icon {
+  font-variation-settings: 'FILL' 1;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.calendar_icon {
+  font-variation-settings: 'FILL' 1;
+
 }
 
 .button_style {
@@ -25,7 +47,7 @@ body {
 }
 
 .btn_primary {
-  background-color: $color-accent;
+  background-color: $color-primary;
   color: white;
 
   a {
@@ -33,7 +55,7 @@ body {
   }
 
   &:hover {
-    background-color: $color-accent;
+    background-color: #806bb5;
     color: white;
   }
 }
@@ -42,17 +64,14 @@ body {
   background-color: white;
 
   a {
-    color: $color-accent;
-    color: white;
-    ;
+    color: $color-primary;
   }
 
-  border: 1px solid $color-accent;
-  color: white;
-  ;
+  border: 1px solid $color-primary;
+
 
   &:hover {
-    background-color: $color-accent;
+    background-color: $color-primary;
     ;
 
     a {
@@ -61,6 +80,25 @@ body {
   }
 }
 
+.btn_add_stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  border-radius: 100px;
+  padding: 10px 24px 10px 16px;
+  background-color: $color-primary;
+  color: white;
+  height: 40px;
+  width: 92px;
+
+  &:hover {
+    background-color: #806bb5;
+    color: white;
+  }
+}
+
 .link {
-  color: $color-accent;
+  color: $color-primary;
 }

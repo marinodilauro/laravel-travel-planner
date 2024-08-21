@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 .input_wrapper {
   display: flex;
   flex-direction: column;
@@ -18,11 +20,11 @@
   .form-control {
     padding: 1rem 0.5rem;
     font-size: 0.75rem;
-    border: 1px #65558f solid;
+    border: 1px $color-primary solid;
     border-radius: 5px;
 
     &:focus {
-      border: 1px #65558f solid;
+      border: 1px $color-primary solid;
       outline: none;
       box-shadow: none;
     }

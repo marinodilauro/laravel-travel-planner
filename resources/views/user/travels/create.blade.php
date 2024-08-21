@@ -31,7 +31,7 @@
       @csrf
 
       <div class="input_wrapper mb-4 row">
-        <label for="name" class="input_label">{{ __('Nome viaggio') }}</label>
+        <label for="name" class="input_label">{{ __('Nome') }}</label>
 
         <div class="col-md-6">
           <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
