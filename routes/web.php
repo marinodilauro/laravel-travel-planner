@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StageController;
 use App\Http\Controllers\TravelController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,7 @@ Route::middleware(['auth', 'verified'])
     ->group(function () {
 
         Route::resource('/travels', TravelController::class)->parameters(['travels' => 'travel:slug']);
+        Route::resource('/stages', StageController::class)->parameters(['stages' => 'stage:slug']);
     });
 
 Route::middleware('auth')->group(function () {

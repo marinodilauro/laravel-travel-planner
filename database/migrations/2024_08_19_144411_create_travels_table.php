@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('travel', function (Blueprint $table) {
+        Schema::create('travels', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->timestamps();
             $table->string('name', 150);
-            $table->string('slug', 50)->nullable();
+            $table->string('slug', 150);
             $table->string('destination', 150);
             $table->date('start_date');
             $table->date('end_date');
             $table->text('description', 250)->nullable();
             $table->string('photo', 255)->nullable();
+            $table->timestamps();
 
-            // Definire la chiave esterna
+            // Foreign key
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

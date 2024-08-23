@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Stage;
 use App\Models\Travel;
-use App\Http\Requests\StoreTravelRequest;
-use App\Http\Requests\UpdateTravelRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use App\Http\Requests\StoreStageRequest;
+use App\Http\Requests\UpdateStageRequest;
 
-class TravelController extends Controller
+class StageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('user.travels.index', ['travels' => Travel::all()]);
+        //
     }
 
     /**
@@ -25,20 +24,20 @@ class TravelController extends Controller
      */
     public function create()
     {
-        return view('user/travels/create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoretravelRequest $request)
+    public function store(StoreStageRequest $request, Travel $travel)
     {
         // dd($request);
 
         // Validate
         $val_data = $request->validated();
 
-        $val_data['user_id'] = Auth::id();
+        $val_data['travel_id'] = $travel->id;
 
         $slug = Str::slug($request->name, '-');
         $val_data['slug'] = $slug;
@@ -50,29 +49,24 @@ class TravelController extends Controller
 
         // Create
         // dd($request->all(), $val_data);
-        $travel = Travel::create($val_data);
+        $stage = Stage::create($val_data);
 
         // Redirect
-        return to_route('user.travels.index')->with('message', "Nuovo viaggio aggiunto!");
+        return to_route('user.travels.index')->with('message', "Nuova tappa aggiunta!");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Travel $travel)
+    public function show(Stage $stage)
     {
-        // Calcola la durata del viaggio in giorni
-        $start_date = Carbon::parse($travel->start_date);
-        $end_date = Carbon::parse($travel->end_date);
-        $duration = $end_date->diffInDays($start_date) + 1;
-
-        return view('user.travels.show', compact('travel', 'duration'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Travel $travel)
+    public function edit(Stage $stage)
     {
         //
     }
@@ -80,7 +74,7 @@ class TravelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTravelRequest $request, Travel $travel)
+    public function update(UpdateStageRequest $request, Stage $stage)
     {
         //
     }
@@ -88,7 +82,7 @@ class TravelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Travel $travel)
+    public function destroy(Stage $stage)
     {
         //
     }

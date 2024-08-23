@@ -46,7 +46,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The review that belong to the DoctorProfile
+     * The travel that belong to the user
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
