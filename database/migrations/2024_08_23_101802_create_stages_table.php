@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('travel_id');
             $table->string('place', 150);
             $table->string('slug', 150);
+            $table->string('day', 15);
             $table->text('note', 250)->nullable();
             $table->string('photo', 255)->nullable();
             $table->timestamps();

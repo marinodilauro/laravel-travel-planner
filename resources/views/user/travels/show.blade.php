@@ -67,7 +67,7 @@
     </div>
 
     {{-- Accordion: Travel Info --}}
-    <div class="accordion">
+    <div class="accordion p-2">
 
       <div class="accordion_item">
 
@@ -93,40 +93,15 @@
     @if ($duration > 7)
       <input type="hidden" id="duration" value="{{ $duration }}">
 
-      <select id="week-selector">
+      {{-- Selector: Week days --}}
+      <div class="mb-3">
+        <select class="form-select form-select-lg weekselector py-3" name="" id="">
 
-      </select>
+        </select>
+      </div>
     @else
       <span class="days_title">Giorni</span>
     @endif
-
-    {{-- Accordion: Week days --}}
-    {{-- <div class="accordion">
-
-      <div class="accordion_item">
-
-        <div class="accordion_header d-flex align-items-center mb-2">
-
-          <span class="me-auto">Seleziona la settimana</span>
-
-          <span class="triangle_icon material-symbols-outlined">
-            arrow_drop_down
-          </span>
-
-        </div>
-
-        <div class="accordion_content">
-
-          <input type="hidden" id="duration" value="{{ $duration }}">
-
-          <select id="week-selector">
-            <option value="1">Seleziona la settimana</option>
-          </select>
-        </div>
-
-      </div>
-
-    </div> --}}
 
     {{-- Week days --}}
     <div class="week_days row row-cols-4 g-2 mt-2">
@@ -153,12 +128,16 @@
           </span>
           Add
         </button>
-
       </div>
 
+
       {{-- Stage form --}}
-      <form action="{{ route('user.stages.store', $travel) }}" method="post" class="w-100">
+      <form action="{{ route('user.stages.store', $travel->slug) }}" method="POST"
+        class="add_stage_form w-100 d-none py-3">
         @csrf
+
+        <input type="hidden" name="travel_id" value="{{ $travel->id }}">
+
 
         <div class="input_wrapper mb-1 row">
           <label for="place" class="input_label">{{ __('Tappa') }}</label>
@@ -197,7 +176,7 @@
             Salva tappa
           </button>
 
-          <button type="submit" class="btn button_style btn_secondary">
+          <button type="button" class="close_form_btn btn button_style btn_secondary">
             Elimina tappa
           </button>
 
@@ -214,4 +193,5 @@
   @vite('resources/js/partials/accordion.js')
   @vite('resources/js/partials/day_badge.js')
   @vite('resources/js/partials/week_selector.js')
+  @vite('resources/js/partials/add_stage.js')
 @endsection

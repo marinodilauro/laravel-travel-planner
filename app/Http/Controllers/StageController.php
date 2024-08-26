@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreStageRequest;
 use App\Http\Requests\UpdateStageRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class StageController extends Controller
 {
@@ -22,9 +24,10 @@ class StageController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($travel)
     {
-        //
+        /*         $travel = Travel::where('slug', $travel)->firstOrFail();
+        return view('user.stages.create', compact('travel')); */
     }
 
     /**
@@ -32,27 +35,31 @@ class StageController extends Controller
      */
     public function store(StoreStageRequest $request, Travel $travel)
     {
-        // dd($request);
 
         // Validate
         $val_data = $request->validated();
 
+        // Set the travel_id
         $val_data['travel_id'] = $travel->id;
 
-        $slug = Str::slug($request->name, '-');
+        //Set the day
+        $val_data['day'] = $travel->id;
+
+        // Create slug
+        $slug = Str::slug($request->place, '-');
         $val_data['slug'] = $slug;
 
-        if ($request->has('photo')) {
-            $image_path = Storage::put('uploads', $val_data['photo']);
+        // Handle photo upload if present
+        if ($request->hasFile('photo')) {
+            $image_path = Storage::put('uploads', $request->file('photo'));
             $val_data['photo'] = $image_path;
         }
 
-        // Create
-        // dd($request->all(), $val_data);
-        $stage = Stage::create($val_data);
+        //Create the stage
+        Stage::create($val_data);
 
-        // Redirect
-        return to_route('user.travels.index')->with('message', "Nuova tappa aggiunta!");
+        // Reindirizzamento alla pagina del viaggio
+        return redirect()->route('user.travels.show', $travel->slug)->with('message', 'Nuova tappa aggiunta!');
     }
 
     /**

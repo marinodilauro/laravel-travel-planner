@@ -95,8 +95,10 @@ body {
   padding: 10px 24px 10px 16px;
   background-color: $color-primary;
   color: white;
-  height: 40px;
-  width: 92px;
+
+  a {
+    color: white;
+  }
 
   &:hover {
     background-color: #806bb5;
@@ -106,4 +108,14 @@ body {
 
 .link {
   color: $color-primary;
+}
+
+.weekselector {
+  background-color: $color-tertiary;
+  font-size: 1rem;
+  font-weight: 500;
+
+  option {
+    background-color: white;
+  }
 }

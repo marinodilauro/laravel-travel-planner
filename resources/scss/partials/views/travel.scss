@@ -72,7 +72,6 @@
   width: 100%;
   margin-bottom: 1rem;
   background-color: $color-tertiary;
-  padding: 1rem;
   border-radius: 10px;
 
   .accordion_item {
@@ -127,17 +126,4 @@
 .days_title {
   font-weight: 500;
   color: #49454F;
-}
-
-#week-selector {
-  border: none;
-  font-weight: 500;
-  color: #49454F;
-  margin: 0 0 1rem -0.3rem;
-
-  &:focus-visible {
-    border: none;
-    outline: none;
-  }
-
 }

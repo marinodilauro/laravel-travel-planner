@@ -25,7 +25,7 @@ class TravelController extends Controller
      */
     public function create()
     {
-        return view('user/travels/create');
+        return view('user.travels.create');
     }
 
     /**
@@ -50,7 +50,7 @@ class TravelController extends Controller
 
         // Create
         // dd($request->all(), $val_data);
-        $travel = Travel::create($val_data);
+        Travel::create($val_data);
 
         // Redirect
         return to_route('user.travels.index')->with('message', "Nuovo viaggio aggiunto!");
