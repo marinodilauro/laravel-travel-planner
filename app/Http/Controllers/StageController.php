@@ -42,8 +42,8 @@ class StageController extends Controller
         // Set the travel_id
         $val_data['travel_id'] = $travel->id;
 
-        //Set the day
-        $val_data['day'] = $travel->id;
+        // Set the day
+        $val_data['day'] = $request->input('day');
 
         // Create slug
         $slug = Str::slug($request->place, '-');

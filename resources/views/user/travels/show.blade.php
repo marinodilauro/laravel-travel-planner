@@ -108,7 +108,8 @@
 
       @for ($i = 0; $i < $duration; $i++)
         <div class="col">
-          <div class="day_badge {{ $i == 0 ? 'selected' : '' }}" id="day-{{ $i + 1 }}">
+          <div class="day_badge {{ $i == 0 ? 'selected' : '' }}" id="day-{{ $i + 1 }}"
+            data_date="{{ date('d/m/y', strtotime($travel->start_date . ' + ' . $i . ' days')) }}">
             {{ date('d/m', strtotime($travel->start_date . ' + ' . $i . ' days')) }}
           </div>
         </div>
@@ -136,8 +137,10 @@
         class="add_stage_form w-100 d-none py-3">
         @csrf
 
-        <input type="hidden" name="travel_id" value="{{ $travel->id }}">
-
+        {{-- <input type="hidden" name="travel_id" value="{{ $travel->id }}"> --}}
+        {{-- Campo nascosto per la data selezionata --}}
+        <input type="hidden" name="day" id="day_input" value="">
+        <!-- Valore di default: Giorno 1 -->
 
         <div class="input_wrapper mb-1 row">
           <label for="place" class="input_label">{{ __('Tappa') }}</label>
