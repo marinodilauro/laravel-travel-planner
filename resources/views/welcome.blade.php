@@ -19,14 +19,14 @@
     <div class="d-flex flex-column align-items-center gap-3 flex-row-md w-100">
 
       <button class="btn button_style btn_primary w-100">
-        <a class="text-decoration-none d-block w-100" href="{{ route('register') }}">Create an account</a>
+        <a class="text-decoration-none d-block w-100" href="{{ route('register') }}">Crea un account</a>
       </button>
 
       <button class="btn button_style btn_secondary w-100">
         <a class="text-decoration-none d-block w-100" href="{{ route('login') }}">Login</a>
       </button>
 
-      <a class="link roboto-medium" href="#">Forgot password?</a>
+      <a class="link roboto-medium" href="#">Password dimenticata?</a>
 
     </div>
   </div>

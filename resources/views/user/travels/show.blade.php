@@ -90,9 +90,9 @@
       </div>
     </div>
 
-    @if ($duration > 7)
-      <input type="hidden" id="duration" value="{{ $duration }}">
+    <input type="hidden" id="duration" value="{{ $duration }}">
 
+    @if ($duration > 7)
       {{-- Selector: Week days --}}
       <div class="mb-3">
         <select class="form-select form-select-lg weekselector py-3" name="" id="">
@@ -186,6 +186,139 @@
         </div>
       </form>
 
+
+
+      {{-- Stage list --}}
+      <div class="row row-cols-1 gap-3 py-3">
+        @forelse ($travel->stages as $stage)
+          <div class="col">
+            <div class="stage_card">
+
+              <a class="d-flex text-decoration-none text-dark p-0 flex-fill"
+                href="{{ route('user.stages.show', $stage) }}">
+                {{-- Card image --}}
+                <div class="card_image">
+                  @if ($stage->photo)
+                    <img class="img-fluid" loading="lazy" src="{{ asset('storage/' . $stage->photo) }}" alt="">
+                  @else
+                    <img class="img-fluid" loading="lazy" src="/storage/img/placeholder_image.png" alt="">
+                  @endif
+                </div>
+
+                {{-- Card body --}}
+                <div class="card_body d-flex flex-column justify-content-between py-2 px-3">
+                  <span class="travel_name pb-2">
+                    {{ $stage->place }}
+                  </span>
+
+                  <div class="d-flex flex-column gap-1">
+                    <div class="roboto-regular d-flex justify-content-start align-items-center">
+                      <span class="destination_icon material-symbols-outlined me-1">today</span>
+                      <span class="text-secondary">{{ $stage->day }}</span>
+                    </div>
+
+                    <div class="roboto-regular d-flex justify-content-start align-items-center">
+                      <p>{{ $stage->note }}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
+
+              {{-- Card actions --}}
+              <div class="card_actions align-self-start mt-4">
+                <div class="dropdown d-flex  align-items-center justify-content-start gap-2 ps-2 p-1">
+
+                  <span data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    class="actions_icon material-symbols-outlined">
+                    more_vert
+                  </span>
+
+                  <ul class="dropdown-menu">
+
+                    {{-- Edit action --}}
+                    <li class="d-flex align-items-center ms-3">
+                      <span class="material-symbols-outlined">
+                        edit
+                      </span>
+                      <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Modifica') }}</a>
+                    </li>
+
+                    {{-- Delete actions --}}
+
+                    <li class="d-flex align-items-center ms-3">
+
+                      <!-- Modal trigger button -->
+                      <span class="material-symbols-outlined">
+                        delete
+                      </span>
+                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalId-{{ $stage->id }}">
+                        Elimina
+                      </a>
+
+                    </li>
+
+                  </ul>
+
+                  <!-- Modal Body -->
+                  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+                  <div class="modal fade" id="modalId-{{ $stage->id }}" tabindex="-1" data-bs-backdrop="static"
+                    data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId-{{ $stage->id }}"
+                    aria-hidden="true">
+
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                      <div class="modal-content align-items-center">
+
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="modalTitleId-{{ $stage->id }}">
+                            ⚠️ ATTENZIONE ⚠️
+                            <br>
+                            Azione irreversibile
+                          </h5>
+                        </div>
+
+                        <div class="modal-body text-center">
+                          Stai per eliminare "{{ $stage->place }}"
+                          <br>
+                          Sei Sicuro/a di voler eliminare questa tappa?
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 p-3">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Chiudi
+                          </button>
+
+                          <form action="{{ route('user.stages.destroy', $stage) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn_red">
+                              Conferma
+                            </button>
+                          </form>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Optional: Place to the bottom of scripts -->
+                  <script>
+                    const myModal = new bootstrap.Modal(
+                      document.getElementById("modalId"),
+                      options,
+                    );
+                  </script>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        @empty
+          <div class="container py-5">
+            <h4 class="text-center">Non hai aggiunto ancora nessuna tappa</h4>
+          </div>
+        @endforelse
+      </div>
     </div>
   </div>
 

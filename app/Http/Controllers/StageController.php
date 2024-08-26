@@ -91,6 +91,18 @@ class StageController extends Controller
      */
     public function destroy(Stage $stage)
     {
-        //
+        // Recupera il Travel associato allo Stage
+        $travel = $stage->travel;
+
+        // Deleting images from assets
+        if ($stage->photo) {
+            Storage::delete($stage->photo);
+        }
+
+        // Deleting stages
+        $stage->delete();
+
+        // Redirect
+        return redirect()->route('user.travels.show', $travel->slug)->with('message', "$stage->place eliminato!");
     }
 }

@@ -127,3 +127,51 @@
   font-weight: 500;
   color: #49454F;
 }
+
+.stage_card {
+  display: flex;
+  align-items: center;
+  border: 1px solid #cac4d0;
+  text-decoration: none;
+  border-radius: 1.3rem;
+  background-color: $color-stage;
+
+  a {
+    .card_image {
+      flex-basis: 30%;
+
+      img {
+        height: 100%;
+        border-radius: 1.3rem 0 0 1.3rem;
+        object-fit: cover;
+      }
+    }
+
+    .card_body {
+      flex-basis: 70%;
+
+      .stage_name {
+        font-size: 1.1rem;
+        font-weight: 450;
+      }
+
+      div {
+        font-size: 0.9rem;
+      }
+
+      .calendar_icon,
+      .destination_icon {
+        font-size: 1.3rem;
+      }
+
+
+    }
+  }
+
+  .card_actions {
+    .actions_icon:hover {
+      cursor: pointer;
+    }
+  }
+
+}

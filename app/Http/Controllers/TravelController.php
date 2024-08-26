@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Travel;
+use App\Models\Stages;
 use App\Http\Requests\StoreTravelRequest;
 use App\Http\Requests\UpdateTravelRequest;
 use Illuminate\Support\Str;
@@ -66,6 +67,9 @@ class TravelController extends Controller
         $end_date = Carbon::parse($travel->end_date);
         $duration = $end_date->diffInDays($start_date) + 1;
 
+        // Carica il viaggio con i suoi stage
+        $travel = Travel::with('stages')->findOrFail($travel->id);
+
         return view('user.travels.show', compact('travel', 'duration'));
     }
 
@@ -90,6 +94,15 @@ class TravelController extends Controller
      */
     public function destroy(Travel $travel)
     {
-        //
+        // Deleting images from assets
+        if ($travel->photo) {
+            Storage::delete($travel->photo);
+        }
+
+        // Deleting travels
+        $travel->delete();
+
+        // Redirect
+        return to_route('admin.travels.index')->with('message', "$travel->name eliminato!");
     }
 }
