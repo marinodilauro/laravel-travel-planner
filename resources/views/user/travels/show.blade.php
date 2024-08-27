@@ -44,7 +44,8 @@
       </div>
       <div class="custom_badge">
         <span class="calendar_icon material-symbols-outlined me-1">today</span>
-        <span>{{ $travel->start_date }} &bullet; {{ $travel->end_date }}</span>
+        <span>{{ date('d/m/y', strtotime($travel->start_date)) }} &bullet;
+          {{ date('d/m/y', strtotime($travel->end_date)) }}</span>
       </div>
     </div>
 
@@ -267,47 +268,37 @@
                     aria-hidden="true">
 
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
-                      <div class="modal-content align-items-center">
+                      <div class="modal-content">
 
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="modalTitleId-{{ $stage->id }}">
-                            ⚠️ ATTENZIONE ⚠️
-                            <br>
-                            Azione irreversibile
-                          </h5>
+                        <div class="modal-header border-0">
+                          <h3 class="modal-title" id="modalTitleId-{{ $stage->id }}">
+                            Elimina tappa
+                          </h3>
                         </div>
 
-                        <div class="modal-body text-center">
-                          Stai per eliminare "{{ $stage->place }}"
+                        <div class="modal-body p-0">
+                          Stai per eliminare <strong>{{ $stage->place }}</strong>
                           <br>
-                          Sei Sicuro/a di voler eliminare questa tappa?
+                          Sei Sicuro/a?
                         </div>
 
-                        <div class="d-flex justify-content-end gap-3 p-3">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Chiudi
-                          </button>
-
+                        <div class="d-flex justify-content-end gap-3 pt-4">
                           <form action="{{ route('user.stages.destroy', $stage) }}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn_red">
-                              Conferma
+                            <button type="submit" class="btn modal_btn">
+                              Elimina tappa
                             </button>
                           </form>
+
+                          <button type="button" class="btn modal_btn" data-bs-dismiss="modal">
+                            Chiudi
+                          </button>
                         </div>
 
                       </div>
                     </div>
                   </div>
-
-                  <!-- Optional: Place to the bottom of scripts -->
-                  <script>
-                    const myModal = new bootstrap.Modal(
-                      document.getElementById("modalId"),
-                      options,
-                    );
-                  </script>
                 </div>
               </div>
 

@@ -87,7 +87,8 @@
 
                 <div class="roboto-regular d-flex justify-content-start align-items-center">
                   <span class="calendar_icon material-symbols-outlined me-1">today</span>
-                  <span class="text-secondary">{{ $travel->start_date }} &bullet; {{ $travel->end_date }}</span>
+                  <span class="text-secondary">{{ date('d/m/y', strtotime($travel->start_date)) }} &bullet;
+                    {{ date('d/m/y', strtotime($travel->end_date)) }}</span>
                   </span>
                 </div>
               </div>
@@ -131,56 +132,46 @@
 
               </ul>
 
-            </div>
 
-            <!-- Modal Body -->
-            <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-            <div class="modal fade" id="modalId-{{ $travel->id }}" tabindex="-1" data-bs-backdrop="static"
-              data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId-{{ $travel->id }}"
-              aria-hidden="true">
+              <!-- Modal Body -->
+              <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+              <div class="modal fade" id="modalId-{{ $travel->id }}" tabindex="-1" data-bs-backdrop="static"
+                data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId-{{ $travel->id }}"
+                aria-hidden="true">
 
-              <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
-                <div class="modal-content align-items-center">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                  <div class="modal-content">
 
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitleId-{{ $travel->id }}">
-                      ⚠️ ATTENZIONE ⚠️
+                    <div class="modal-header border-0">
+                      <h5 class="modal-title" id="modalTitleId-{{ $travel->id }}">
+                        Elimina itinerario
+                      </h5>
+                    </div>
+
+                    <div class="modal-body p-0">
+                      Stai per eliminare <strong>{{ $travel->name }}</strong>
                       <br>
-                      Azione irreversibile
-                    </h5>
-                  </div>
+                      Sei sicuro/a?
+                    </div>
 
-                  <div class="modal-body text-center">
-                    Stai per eliminare "{{ $travel->name }}"
-                    <br>
-                    Sei Sicuro/a di voler eliminare questo viaggio?
-                  </div>
+                    <div class="d-flex justify-content-end gap-3 p-3">
+                      <form action="{{ route('user.travels.destroy', $travel) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn modal_btn">
+                          Conferma
+                        </button>
+                      </form>
 
-                  <div class="d-flex justify-content-end gap-3 p-3">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                      Chiudi
-                    </button>
-
-                    <form action="{{ route('user.travels.destroy', $travel) }}" method="post">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn_red">
-                        Conferma
+                      <button type="button" class="btn modal_btn" data-bs-dismiss="modal">
+                        Chiudi
                       </button>
-                    </form>
-                  </div>
+                    </div>
 
+                  </div>
                 </div>
               </div>
             </div>
-
-            <!-- Optional: Place to the bottom of scripts -->
-            <script>
-              const myModal = new bootstrap.Modal(
-                document.getElementById("modalId"),
-                options,
-              );
-            </script>
 
           </div>
 
