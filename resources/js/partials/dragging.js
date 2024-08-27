@@ -31,6 +31,21 @@ document.addEventListener("DOMContentLoaded", function () {
       newTop = Math.max(minTop, Math.min(maxTop, newTop));
 
       detailsSection.style.top = `${newTop}px`;
+
+      // Aggiorna dinamicamente le dimensioni degli altri elementi
+      const relativePosition = (newTop - minTop) / (maxTop - minTop);
+
+      // Calcola e imposta la nuova altezza per headerImage
+      const newHeight = 38 + (32 * relativePosition); // Tra 38vh e 70vh
+      headerImage.style.height = `${newHeight}vh`;
+
+      // Calcola e imposta la nuova posizione per la mappa
+      const newMapTop = -28 + (18 * relativePosition); // Tra -28vh e -10vh
+      map.style.top = `${newMapTop}vh`;
+
+      // Calcola e imposta la nuova posizione per i chips
+      const newChipsTop = 22 + (32 * relativePosition); // Tra 22% e 54%
+      chips.style.top = `${newChipsTop}%`;
     }
   });
 
