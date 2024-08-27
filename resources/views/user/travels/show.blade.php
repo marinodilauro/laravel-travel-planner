@@ -55,273 +55,273 @@
 
 
   {{-- Travel details --}}
-  <div class="container">
-    <div class="travel_details">
 
-      <button id="drag_handle" class="drag_handle"></button>
+  <div class="travel_details">
 
-      <div class="top_bar d-flex align-items-center py-4">
+    <button id="drag_handle" class="drag_handle"></button>
 
-        <span class="title roboto-medium me-auto">Organizza il tuo viaggio</span>
+    <div class="top_bar d-flex align-items-center py-4">
 
-        <button class="back_btn map_btn">
+      <span class="title roboto-medium me-auto">Organizza il tuo viaggio</span>
 
-          <span class="material-symbols-outlined">
-            map
+      <button class="back_btn map_btn">
+
+        <span class="material-symbols-outlined">
+          map
+        </span>
+
+      </button>
+    </div>
+
+    {{-- Accordion: Travel Info --}}
+    <div class="accordion p-2">
+
+      <div class="accordion_item">
+
+        <div class="accordion_header d-flex align-items-center">
+
+          <span class="me-auto">Info sul viaggio</span>
+
+          <span class="triangle_icon material-symbols-outlined">
+            arrow_drop_down
           </span>
 
+        </div>
+
+        <div class="accordion_content">
+          <p>{{ $travel->description }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam libero eum
+            in,
+            dolor deserunt sit a doloremque quo earum tempora laboriosam dolorem aliquid numquam autem omnis, neque
+            explicabo corrupti exercitationem?</p>
+        </div>
+
+      </div>
+    </div>
+
+    <input type="hidden" id="duration" value="{{ $duration }}">
+
+    @if ($duration > 7)
+      {{-- Selector: Week days --}}
+      <div class="mb-3">
+        <select class="form-select form-select-lg weekselector py-3" name="" id="">
+
+        </select>
+      </div>
+    @else
+      <span class="days_title">Giorni</span>
+    @endif
+
+    {{-- Week days --}}
+    <div class="week_days row row-cols-4 g-2 mt-2">
+
+      @for ($i = 0; $i < $duration; $i++)
+        <div class="col">
+          <div class="day_badge {{ $i == 0 ? 'selected' : '' }}" id="day-{{ $i + 1 }}"
+            data_date="{{ date('d/m/y', strtotime($travel->start_date . ' + ' . $i . ' days')) }}">
+            {{ date('d/m', strtotime($travel->start_date . ' + ' . $i . ' days')) }}
+          </div>
+        </div>
+      @endfor
+
+    </div>
+
+    {{-- Day --}}
+    <div>
+      <div class="top_bar d-flex align-items-center pt-4">
+
+        <span id="day_label" class="me-auto"></span>
+
+        <button class="btn btn_add_stage">
+          <span class="material-symbols-outlined me-2">
+            add
+          </span>
+          Add
         </button>
       </div>
 
-      {{-- Accordion: Travel Info --}}
-      <div class="accordion p-2">
 
-        <div class="accordion_item">
+      {{-- Stage form --}}
+      <form action="{{ route('user.stages.store', $travel->slug) }}" method="POST"
+        class="add_stage_form w-100 d-none py-3">
+        @csrf
 
-          <div class="accordion_header d-flex align-items-center">
+        {{-- <input type="hidden" name="travel_id" value="{{ $travel->id }}"> --}}
 
-            <span class="me-auto">Info sul viaggio</span>
+        {{-- Campo nascosto per la data selezionata --}}
+        <input type="hidden" name="day" id="day_input" value="">
+        <!-- Valore di default: Giorno 1 -->
 
-            <span class="triangle_icon material-symbols-outlined">
-              arrow_drop_down
-            </span>
+        <div class="input_wrapper mb-1 row">
+          <label for="place" class="input_label">{{ __('Tappa') }}</label>
 
+          <div class="col-md-6">
+            <input id="place" type="text" class="form-control @error('place') is-invalid @enderror" name="place"
+              value="{{ old('place') }}" required autocomplete="place" autofocus>
+
+            @error('place')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
           </div>
-
-          <div class="accordion_content">
-            <p>{{ $travel->description }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam libero eum
-              in,
-              dolor deserunt sit a doloremque quo earum tempora laboriosam dolorem aliquid numquam autem omnis, neque
-              explicabo corrupti exercitationem?</p>
-          </div>
-
-        </div>
-      </div>
-
-      <input type="hidden" id="duration" value="{{ $duration }}">
-
-      @if ($duration > 7)
-        {{-- Selector: Week days --}}
-        <div class="mb-3">
-          <select class="form-select form-select-lg weekselector py-3" name="" id="">
-
-          </select>
-        </div>
-      @else
-        <span class="days_title">Giorni</span>
-      @endif
-
-      {{-- Week days --}}
-      <div class="week_days row row-cols-4 g-2 mt-2">
-
-        @for ($i = 0; $i < $duration; $i++)
-          <div class="col">
-            <div class="day_badge {{ $i == 0 ? 'selected' : '' }}" id="day-{{ $i + 1 }}"
-              data_date="{{ date('d/m/y', strtotime($travel->start_date . ' + ' . $i . ' days')) }}">
-              {{ date('d/m', strtotime($travel->start_date . ' + ' . $i . ' days')) }}
-            </div>
-          </div>
-        @endfor
-
-      </div>
-
-      {{-- Day --}}
-      <div>
-        <div class="top_bar d-flex align-items-center pt-4">
-
-          <span id="day_label" class="me-auto"></span>
-
-          <button class="btn btn_add_stage">
-            <span class="material-symbols-outlined me-2">
-              add
-            </span>
-            Add
-          </button>
         </div>
 
+        <div class="input_wrapper mb-3 row">
+          <label for="note" class="input_label">{{ __('Note') }}</label>
 
-        {{-- Stage form --}}
-        <form action="{{ route('user.stages.store', $travel->slug) }}" method="POST"
-          class="add_stage_form w-100 d-none py-3">
-          @csrf
-
-          {{-- <input type="hidden" name="travel_id" value="{{ $travel->id }}"> --}}
-
-          {{-- Campo nascosto per la data selezionata --}}
-          <input type="hidden" name="day" id="day_input" value="">
-          <!-- Valore di default: Giorno 1 -->
-
-          <div class="input_wrapper mb-1 row">
-            <label for="place" class="input_label">{{ __('Tappa') }}</label>
-
-            <div class="col-md-6">
-              <input id="place" type="text" class="form-control @error('place') is-invalid @enderror"
-                name="place" value="{{ old('place') }}" required autocomplete="place" autofocus>
-
-              @error('place')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-              @enderror
-            </div>
-          </div>
-
-          <div class="input_wrapper mb-3 row">
-            <label for="note" class="input_label">{{ __('Note') }}</label>
-
-            <div class="col-md-6">
-              <textarea id="note" name="note" class="form-control @error('note') is-invalid @enderror" autofocus>
+          <div class="col-md-6">
+            <textarea id="note" name="note" class="form-control @error('note') is-invalid @enderror" autofocus>
           {{ old('note') }}
           </textarea>
 
-              @error('note')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-              @enderror
-            </div>
+            @error('note')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
           </div>
+        </div>
 
-          <div class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center gap-3">
 
-            <button type="submit" class="btn button_style btn_primary">
-              Salva tappa
-            </button>
+          <button type="submit" class="btn button_style btn_primary">
+            Salva tappa
+          </button>
 
-            <button type="button" class="close_form_btn btn button_style btn_secondary">
-              Elimina tappa
-            </button>
+          <button type="button" class="close_form_btn btn button_style btn_secondary">
+            Elimina tappa
+          </button>
 
-          </div>
-        </form>
+        </div>
+      </form>
 
 
 
-        {{-- Stage list --}}
-        <div class="row row-cols-1 gap-3 py-3">
-          @forelse ($travel->stages as $stage)
-            <div class="col">
-              <div class="stage_card" data_day="{{ $stage->day }}">
+      {{-- Stage list --}}
+      <div class="row row-cols-1 gap-3 py-3">
+        @forelse ($travel->stages as $stage)
+          <div class="col">
+            <div class="stage_card" data_day="{{ $stage->day }}">
 
-                <a class="d-flex text-decoration-none text-dark p-0 flex-fill"
-                  href="{{ route('user.stages.show', $stage) }}">
-                  {{-- Card image --}}
-                  <div class="card_image">
-                    @if ($stage->photo)
-                      <img class="img-fluid" loading="lazy" src="{{ asset('storage/' . $stage->photo) }}" alt="">
-                    @else
-                      <img class="img-fluid" loading="lazy" src="/storage/img/placeholder_image.png" alt="">
-                    @endif
-                  </div>
+              <a class="d-flex text-decoration-none text-dark p-0 flex-fill"
+                href="{{ route('user.stages.show', $stage) }}">
+                {{-- Card image --}}
+                <div class="card_image">
+                  @if ($stage->photo)
+                    <img class="img-fluid" loading="lazy" src="{{ asset('storage/' . $stage->photo) }}" alt="">
+                  @else
+                    <img class="img-fluid" loading="lazy" src="/storage/img/placeholder_image.png" alt="">
+                  @endif
+                </div>
 
-                  {{-- Card body --}}
-                  <div class="card_body d-flex flex-column justify-content-between py-2 px-3">
-                    <span class="travel_name pb-2">
-                      {{ $stage->place }}
-                    </span>
+                {{-- Card body --}}
+                <div class="card_body d-flex flex-column justify-content-between py-2 px-3">
+                  <span class="travel_name pb-2">
+                    {{ $stage->place }}
+                  </span>
 
-                    <div class="d-flex flex-column gap-1">
-                      <div class="roboto-regular d-flex justify-content-start align-items-center">
-                        <span class="destination_icon material-symbols-outlined me-1">today</span>
-                        <span class="text-secondary">{{ $stage->day }}</span>
-                      </div>
-
-                      <div class="roboto-regular d-flex justify-content-start align-items-center">
-                        <p>{{ $stage->note }}</p>
-                      </div>
+                  <div class="d-flex flex-column gap-1">
+                    <div class="roboto-regular d-flex justify-content-start align-items-center">
+                      <span class="destination_icon material-symbols-outlined me-1">today</span>
+                      <span class="text-secondary">{{ $stage->day }}</span>
                     </div>
 
+                    <div class="roboto-regular d-flex justify-content-start align-items-center">
+                      <p>{{ $stage->note }}</p>
+                    </div>
                   </div>
-                </a>
 
-                {{-- Card actions --}}
-                <div class="card_actions align-self-start mt-4">
-                  <div class="dropdown d-flex  align-items-center justify-content-start gap-2 ps-2 p-1">
+                </div>
+              </a>
 
-                    <span data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                      class="actions_icon material-symbols-outlined">
-                      more_vert
-                    </span>
+              {{-- Card actions --}}
+              <div class="card_actions align-self-start mt-4">
+                <div class="dropdown d-flex  align-items-center justify-content-start gap-2 ps-2 p-1">
 
-                    <ul class="dropdown-menu">
+                  <span data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    class="actions_icon material-symbols-outlined">
+                    more_vert
+                  </span>
 
-                      {{-- Edit action --}}
-                      <li class="d-flex align-items-center ms-3">
-                        <span class="material-symbols-outlined">
-                          edit
-                        </span>
-                        <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Modifica') }}</a>
-                      </li>
+                  <ul class="dropdown-menu">
 
-                      {{-- Delete actions --}}
+                    {{-- Edit action --}}
+                    <li class="d-flex align-items-center ms-3">
+                      <span class="material-symbols-outlined">
+                        edit
+                      </span>
+                      <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Modifica') }}</a>
+                    </li>
 
-                      <li class="d-flex align-items-center ms-3">
+                    {{-- Delete actions --}}
 
-                        <!-- Modal trigger button -->
-                        <span class="material-symbols-outlined">
-                          delete
-                        </span>
-                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalId-{{ $stage->id }}">
-                          Elimina
-                        </a>
+                    <li class="d-flex align-items-center ms-3">
 
-                      </li>
+                      <!-- Modal trigger button -->
+                      <span class="material-symbols-outlined">
+                        delete
+                      </span>
+                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalId-{{ $stage->id }}">
+                        Elimina
+                      </a>
 
-                    </ul>
+                    </li>
 
-                    <!-- Modal Body -->
-                    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-                    <div class="modal fade" id="modalId-{{ $stage->id }}" tabindex="-1" data-bs-backdrop="static"
-                      data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId-{{ $stage->id }}"
-                      aria-hidden="true">
+                  </ul>
 
-                      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
-                        <div class="modal-content">
+                  <!-- Modal Body -->
+                  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+                  <div class="modal fade" id="modalId-{{ $stage->id }}" tabindex="-1" data-bs-backdrop="static"
+                    data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId-{{ $stage->id }}"
+                    aria-hidden="true">
 
-                          <div class="modal-header border-0">
-                            <h3 class="modal-title" id="modalTitleId-{{ $stage->id }}">
-                              Elimina tappa
-                            </h3>
-                          </div>
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+                      <div class="modal-content">
 
-                          <div class="modal-body p-0">
-                            Stai per eliminare <strong>{{ $stage->place }}</strong>
-                            <br>
-                            Sei Sicuro/a?
-                          </div>
-
-                          <div class="d-flex justify-content-end gap-3 pt-4">
-                            <form action="{{ route('user.stages.destroy', $stage) }}" method="post">
-                              @csrf
-                              @method('DELETE')
-                              <button type="submit" class="btn modal_btn">
-                                Elimina tappa
-                              </button>
-                            </form>
-
-                            <button type="button" class="btn modal_btn" data-bs-dismiss="modal">
-                              Chiudi
-                            </button>
-                          </div>
-
+                        <div class="modal-header border-0">
+                          <h3 class="modal-title" id="modalTitleId-{{ $stage->id }}">
+                            Elimina tappa
+                          </h3>
                         </div>
+
+                        <div class="modal-body p-0">
+                          Stai per eliminare <strong>{{ $stage->place }}</strong>
+                          <br>
+                          Sei Sicuro/a?
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 pt-4">
+                          <form action="{{ route('user.stages.destroy', $stage) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn modal_btn">
+                              Elimina tappa
+                            </button>
+                          </form>
+
+                          <button type="button" class="btn modal_btn" data-bs-dismiss="modal">
+                            Chiudi
+                          </button>
+                        </div>
+
                       </div>
                     </div>
                   </div>
                 </div>
-
               </div>
-            </div>
-          @empty
-            <div class="container py-5">
-              <h4 class="text-center">Non hai aggiunto ancora nessuna tappa</h4>
-            </div>
-          @endforelse
-        </div>
-      </div>
 
+            </div>
+          </div>
+        @empty
+          <div class="container py-5">
+            <h4 class="text-center">Non hai aggiunto ancora nessuna tappa</h4>
+          </div>
+        @endforelse
+      </div>
     </div>
+
   </div>
+
 
 
   <script>

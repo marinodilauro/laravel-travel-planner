@@ -22,6 +22,7 @@ if (window.firstStageCoordinates) {
 }
 
 const map = tt.map(mapOptions);
+const dragHandle = document.getElementById('drag_handle');
 
 // Toggle mappa/immagine di copertina del viaggio
 document.addEventListener("DOMContentLoaded", function () {
@@ -31,8 +32,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const mapDiv = document.getElementById('map');
 
 
-  // Inizialmente nasconde il div mappa
+  // Inizialmente nasconde il div mappa e la handle
   mapDiv.style.display = 'none';
+  dragHandle.style.display = 'none';
 
   mapBtn.addEventListener('click', function () {
 
@@ -42,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
       travelImage.style.display = 'none';
       foreground.style.display = 'none';
       mapDiv.style.display = 'block';
+      dragHandle.style.display = 'block';
 
     } else {
 
@@ -49,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
       travelImage.style.display = 'block';
       foreground.style.display = 'block';
       mapDiv.style.display = 'none';
+      dragHandle.style.display = 'none';
 
     }
 

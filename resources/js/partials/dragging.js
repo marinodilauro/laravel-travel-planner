@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const dragHandle = document.getElementById('drag_handle');
   const map = document.getElementById('map');
   const headerImage = document.querySelector('.header_image');
-  const foreground = document.querySelector('.foreground');
   const chips = document.querySelector('.chips');
 
   let isDragging = false;
@@ -52,12 +51,13 @@ document.addEventListener("DOMContentLoaded", function () {
       detailsSection.style.top = '70vh';
       headerImage.style.height = '70vh'; // Riduci l'altezza dell'immagine/mappa
       map.style.top = '-10vh'; // Riduci l'altezza dell'immagine/mappa
-
+      chips.style.top = '54%';
     } else {
 
       detailsSection.style.top = '38vh';
       headerImage.style.height = '38vh'; // Aumenta l'altezza dell'immagine/mappa
       map.style.top = '-28vh'; // Aumenta l'altezza dell'immagine/mappa
+      chips.style.top = '22%';
 
     }
 
