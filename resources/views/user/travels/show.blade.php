@@ -192,7 +192,7 @@
       <div class="row row-cols-1 gap-3 py-3">
         @forelse ($travel->stages as $stage)
           <div class="col">
-            <div class="stage_card">
+            <div class="stage_card" data_day="{{ $stage->day }}">
 
               <a class="d-flex text-decoration-none text-dark p-0 flex-fill"
                 href="{{ route('user.stages.show', $stage) }}">
