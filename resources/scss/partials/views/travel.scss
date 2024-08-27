@@ -1,10 +1,13 @@
 @use '../variables' as *;
 
-.travel_image {
-  position: relative;
-  height: 250px;
+
+/* #region ::::: HEADER ::::: */
+
+/* #region ::::: TRAVEL IMAGE ::::: */
+
+.header_image {
   width: 100%;
-  background-color: #dadce0;
+  transition: height 0.3s ease;
 
   .title_bar {
     position: absolute;
@@ -13,15 +16,14 @@
 
   img {
     position: absolute;
-    z-index: 2;
     width: 100%;
-    height: 100%;
     object-fit: contain;
     object-position: center;
   }
 
   .foreground {
     position: absolute;
+    top: -62%;
     z-index: 3;
     width: 100%;
     height: 100%;
@@ -30,7 +32,7 @@
 
   .chips {
     position: absolute;
-    top: 56%;
+    top: 22%;
     z-index: 4;
     display: flex;
     flex-wrap: wrap;
@@ -62,12 +64,126 @@
   }
 }
 
+/* #endregion ::::: TRAVEL IMAGE ::::: */
+
+/* #region ::::: MAP ::::: */
+#map {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  transition: top 0.3s ease;
+}
+
+.mapboxgl-popup-anchor-right {
+  .mapboxgl-popup-tip {
+    border-left-color: $color-secondary;
+  }
+}
+
+.mapboxgl-popup-anchor-left {
+  .mapboxgl-popup-tip {
+    border-right-color: $color-secondary;
+  }
+}
+
+.mapboxgl-popup-anchor-bottom {
+  .mapboxgl-popup-tip {
+    border-top-color: $color-secondary;
+  }
+}
+
+.mapboxgl-popup-anchor-top {
+  .mapboxgl-popup-tip {
+    border-bottom-color: $color-secondary;
+  }
+}
+
+.mapboxgl-popup-anchor-bottom-right {
+  .mapboxgl-popup-tip {
+    border-right: none;
+    border-top-color: $color-secondary;
+  }
+}
+
+.mapboxgl-popup-anchor-bottom-left {
+  .mapboxgl-popup-tip {
+    border-left: none;
+    border-top-color: $color-secondary;
+  }
+}
+
+.mapboxgl-popup-anchor-top-right {
+  .mapboxgl-popup-tip {
+    border-right: none;
+    border-bottom-color: $color-secondary;
+  }
+}
+
+.mapboxgl-popup-anchor-top-left {
+  .mapboxgl-popup-tip {
+    border-left: none;
+    border-bottom-color: $color-secondary;
+  }
+}
+
+.marker_popup {
+
+  .mapboxgl-popup-content {
+    background-color: $color-secondary;
+    padding: 0.5rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+  }
+}
+
+/* #endregion ::::: MAP ::::: */
+
+/* #endregion ::::: HEADER ::::: */
+
+/* #region ::::: TRAVEL DETAILS ::::: */
+
+.travel_details {
+  position: absolute;
+  top: 38vh;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 38vh);
+  transition: top 0.3s ease;
+  z-index: 1;
+  background-color: white;
+  padding: 1rem;
+}
+
+// Drag handle
+#drag_handle {
+  cursor: grab;
+  display: block;
+  margin: 1rem auto;
+  width: 40px;
+  height: 5px;
+  background-color: grey;
+  border-radius: 1rem;
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+// Top bar
 .top_bar {
   .title {
     font-size: 1.1rem;
   }
 }
 
+// Accordion
 .accordion {
   width: 100%;
   margin-bottom: 1rem;
@@ -97,6 +213,7 @@
   }
 }
 
+// Week Days
 .week_days {
   display: flex;
   flex-wrap: wrap;
@@ -118,6 +235,7 @@
   }
 }
 
+// Days
 #day_label {
   font-weight: 500;
   color: #49454F;
@@ -128,6 +246,7 @@
   color: #49454F;
 }
 
+// Stage cards
 .stage_card {
   display: flex;
   align-items: center;
@@ -175,3 +294,5 @@
   }
 
 }
+
+/* #endregion ::::: TRAVEL DETAILS ::::: */

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreStageRequest;
 use App\Http\Requests\UpdateStageRequest;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Http;
 
 class StageController extends Controller
 {
@@ -53,6 +53,21 @@ class StageController extends Controller
         if ($request->hasFile('photo')) {
             $image_path = Storage::put('uploads', $request->file('photo'));
             $val_data['photo'] = $image_path;
+        }
+
+        // Geocoding the position
+        $response = Http::get("https://api.tomtom.com/search/2/geocode/{$request->place}.json", [
+            'key' => '7Ja8sBNIfLOZqGSKQ0JmEQeYrsKGdGsw'
+        ]);
+
+        // Manage geocoding
+        if ($response->successful() && !empty($response->json()['results'])) {
+            $location = $response->json()['results'][0]['position'];
+            $val_data['latitude'] = $location['lat'];
+            $val_data['longitude'] = $location['lon'];
+        } else {
+            // Geocoding failed
+            return redirect()->back()->withErrors(['place' => 'Unable to geocode the provided location. Please enter a valid address or place.']);
         }
 
         //Create the stage

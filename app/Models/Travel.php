@@ -13,7 +13,7 @@ class Travel extends Model
 
     protected $table = 'travels';
 
-    protected $fillable = ['user_id', 'name', 'slug', 'destination', 'start_date', 'end_date', 'description', 'photo'];
+    protected $fillable = ['user_id', 'name', 'slug', 'destination', 'start_date', 'end_date', 'description', 'photo', 'latitude', 'longitude'];
     protected $hidden = [];
     public function getRouteKeyName()
     {

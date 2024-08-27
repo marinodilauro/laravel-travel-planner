@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateTravelRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 
 class TravelController extends Controller
@@ -49,6 +50,21 @@ class TravelController extends Controller
             $val_data['photo'] = $image_path;
         }
 
+        // Geocoding the position
+        $response = Http::get("https://api.tomtom.com/search/2/geocode/{$request->destination}.json", [
+            'key' => '7Ja8sBNIfLOZqGSKQ0JmEQeYrsKGdGsw'
+        ]);
+
+        // Manage geocoding
+        if ($response->successful() && !empty($response->json()['results'])) {
+            $location = $response->json()['results'][0]['position'];
+            $val_data['latitude'] = $location['lat'];
+            $val_data['longitude'] = $location['lon'];
+        } else {
+            // Geocoding failed
+            return redirect()->back()->withErrors(['destination' => 'Unable to geocode the provided location. Please enter a valid address or place.']);
+        }
+
         // Create
         // dd($request->all(), $val_data);
         Travel::create($val_data);
@@ -70,7 +86,19 @@ class TravelController extends Controller
         // Carica il viaggio con i suoi stage
         $travel = Travel::with('stages')->findOrFail($travel->id);
 
-        return view('user.travels.show', compact('travel', 'duration'));
+        // Recupera la prima tappa (se esiste)
+        $firstStage = $travel->stages->first();
+
+        // Se non ci sono tappe, ottieni le coordinate della destinazione
+        if (!$firstStage) {
+            $response = Http::get("https://api.tomtom.com/search/2/geocode/{$travel->destination}.json", [
+                'key' => '7Ja8sBNIfLOZqGSKQ0JmEQeYrsKGdGsw'
+            ]);
+
+            $destinationCoordinates = $response->json()['results'][0]['position'];
+        }
+
+        return view('user.travels.show', compact('travel', 'duration', 'firstStage', 'destinationCoordinates'));
     }
 
     /**

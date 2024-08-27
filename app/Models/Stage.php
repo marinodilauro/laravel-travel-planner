@@ -10,7 +10,7 @@ class Stage extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['travel_id', 'place', 'slug', 'day', 'note', 'photo'];
+    protected $fillable = ['travel_id', 'place', 'slug', 'day', 'note', 'photo', 'latitude', 'longitude'];
 
 
     /**
