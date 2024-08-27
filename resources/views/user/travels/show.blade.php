@@ -261,7 +261,9 @@
                       <span class="material-symbols-outlined">
                         delete
                       </span>
-                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalId-{{ $stage->id }}">
+                      <a class="dropdown-item open_modal_btn" data-bs-toggle="modal" data-bs-target="#modalId"
+                        data-stage="{{ $stage }}" data-stage-id="{{ $stage->id }}"
+                        data-stage-place="{{ $stage->place }}">
                         Elimina
                       </a>
 
@@ -269,60 +271,57 @@
 
                   </ul>
 
-                  <!-- Modal Body -->
-                  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
-                  <div class="modal fade" id="modalId-{{ $stage->id }}" tabindex="-1" data-bs-backdrop="static"
-                    data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId-{{ $stage->id }}"
-                    aria-hidden="true">
-
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
-                      <div class="modal-content">
-
-                        <div class="modal-header border-0">
-                          <h3 class="modal-title" id="modalTitleId-{{ $stage->id }}">
-                            Elimina tappa
-                          </h3>
-                        </div>
-
-                        <div class="modal-body p-0">
-                          Stai per eliminare <strong>{{ $stage->place }}</strong>
-                          <br>
-                          Sei Sicuro/a?
-                        </div>
-
-                        <div class="d-flex justify-content-end gap-3 pt-4">
-                          <form action="{{ route('user.stages.destroy', $stage) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn modal_btn">
-                              Elimina tappa
-                            </button>
-                          </form>
-
-                          <button type="button" class="btn modal_btn" data-bs-dismiss="modal">
-                            Chiudi
-                          </button>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
 
             </div>
           </div>
-        @empty
-          <div class="container py-5">
-            <h4 class="text-center">Non hai aggiunto ancora nessuna tappa</h4>
-          </div>
-        @endforelse
       </div>
+    @empty
+
+      <h5 class="text-center">Non hai aggiunto ancora nessuna tappa</h5>
+      @endforelse
     </div>
 
   </div>
 
+  <!-- Modal Body -->
+  <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+  <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
 
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header border-0">
+          <h3 class="modal-title" id="modalTitleId">
+            Elimina tappa
+          </h3>
+        </div>
+
+        <div class="modal-body p-0">
+          Stai per eliminare <strong id="modalPlace"></strong>
+          <br>
+          Sei Sicuro/a?
+        </div>
+
+        <div class="d-flex justify-content-end gap-3 pt-4">
+          <form id="deleteForm" method="post">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn modal_btn">
+              Elimina tappa
+            </button>
+          </form>
+
+          <button type="button" class="btn modal_btn" data-bs-dismiss="modal">
+            Chiudi
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <script>
     //  Tappe recuperate dal backend per inviarle al file javascript 
@@ -341,10 +340,15 @@
       @endif ;
 
     //  Centro della mappa impostato sulla destinazione del viaggio 
-    window.destinationCoordinates = {
-      latitude: {{ $destinationCoordinates['lat'] }},
-      longitude: {{ $destinationCoordinates['lon'] }}
-    };
+    window.destinationCoordinates =
+      @if (!$firstStage)
+        {
+          latitude: {{ $destinationCoordinates['lat'] }},
+          longitude: {{ $destinationCoordinates['lon'] }}
+        }
+      @else
+        null
+      @endif ;
   </script>
 
 @endsection
@@ -356,4 +360,5 @@
   @vite('resources/js/partials/add_stage.js')
   @vite('resources/js/partials/map.js')
   @vite('resources/js/partials/dragging.js')
+  @vite('resources/js/partials/modal.js')
 @endsection

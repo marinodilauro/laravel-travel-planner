@@ -33,8 +33,9 @@ Route::middleware(['auth', 'verified'])
         // Rotta personalizzata per creare una tappa con il parametro {travel}
         Route::get('/travels/{travel}/stages/create', [StageController::class, 'create'])->name('stages.create');
         Route::post('/travels/{travel:slug}/stages', [StageController::class, 'store'])->name('stages.store');
+        Route::delete('/stages/{stage}', [StageController::class, 'destroy'])->name('user.stages.destroy');
         Route::resource('/travels', TravelController::class)->parameters(['travels' => 'travel:slug']);
-        Route::resource('/stages', StageController::class)->only(['index', 'show', 'destroy'])->parameters(['stages' => 'stage:slug']);
+        Route::resource('/stages', StageController::class)->only(['index', 'show'])->parameters(['stages' => 'stage:slug']);
     });
 
 Route::middleware('auth')->group(function () {

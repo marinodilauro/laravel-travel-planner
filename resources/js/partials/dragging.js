@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Setta la posizione della mappa al caricamento della pagina
   map.style.top = '-28vh';
+  headerImage.style.height = '38vh';
 
   // Avvia il trascinamento tenendo premuto sulla handle
   dragHandle.addEventListener('mousedown', function (event) {

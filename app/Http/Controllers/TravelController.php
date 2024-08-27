@@ -96,6 +96,8 @@ class TravelController extends Controller
             ]);
 
             $destinationCoordinates = $response->json()['results'][0]['position'];
+        } else {
+            $destinationCoordinates = null;
         }
 
         return view('user.travels.show', compact('travel', 'duration', 'firstStage', 'destinationCoordinates'));
