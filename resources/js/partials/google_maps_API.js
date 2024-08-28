@@ -10,11 +10,32 @@ document.addEventListener('DOMContentLoaded', function () {
   // Imposta le opzioni della mappa
   const mapOptions = {
     zoom: 10,
-    center: { lat: 0, lng: 0 }, // Placeholder, verrà aggiornato
+    center: { lat: 0, lng: 0 },// Placeholder, verrà aggiornato
+    streetViewControl: true, // Attiva il controllo Street View
   };
 
   // Crea la mappa
   const map = new google.maps.Map(mapDiv, mapOptions);
+  const streetView = map.getStreetView();
+
+  // Bottone per uscire da Street View
+  const exitStreetViewBtn = document.getElementById('exitStreetView');
+
+  // Monitorare l'entrata e l'uscita dalla modalità Street View
+  streetView.addListener('visible_changed', function () {
+    if (streetView.getVisible()) {
+      // Se Street View è visibile, mostra il bottone per uscire
+      exitStreetViewBtn.style.display = 'block';
+    } else {
+      // Nascondi il bottone quando esci da Street View
+      exitStreetViewBtn.style.display = 'none';
+    }
+  });
+
+  // Uscire da Street View quando si clicca sul bottone
+  exitStreetViewBtn.addEventListener('click', function () {
+    streetView.setVisible(false);
+  });
 
   // Se esistono le coordinate della prima tappa, centra la mappa su di esse
   if (window.firstStageCoordinates) {

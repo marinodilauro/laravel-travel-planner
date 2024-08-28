@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
       map.style.top = `${newMapTop}vh`;
 
       // Calcola e imposta la nuova posizione per i chips
-      const newChipsTop = 24 + (30 * relativePosition); // Tra 22% e 54%
+      const newChipsTop = 23 + (32 * relativePosition); // Tra 22% e 54%
       chips.style.top = `${newChipsTop}%`;
     }
   });
@@ -67,13 +67,13 @@ document.addEventListener("DOMContentLoaded", function () {
       detailsSection.style.top = '70vh';
       headerImage.style.height = '70vh'; // Riduci l'altezza dell'immagine/mappa
       map.style.top = '-10vh'; // Riduci l'altezza dell'immagine/mappa
-      chips.style.top = '50%';
+      chips.style.top = '55%';
     } else {
 
       detailsSection.style.top = '38vh';
       headerImage.style.height = '38vh'; // Aumenta l'altezza dell'immagine/mappa
       map.style.top = '-28vh'; // Aumenta l'altezza dell'immagine/mappa
-      chips.style.top = '24%';
+      chips.style.top = '23%';
     }
 
   });

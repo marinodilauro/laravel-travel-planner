@@ -26,6 +26,12 @@
         {{ $travel->name }}
       </h2>
 
+      <button id="exitStreetView">
+        <span class="material-symbols-outlined">
+          close
+        </span>
+      </button>
+
     </div>
 
     @if ($travel->photo)
@@ -51,6 +57,8 @@
 
     {{-- Map --}}
     <div id="map" class="map"></div>
+
+
   </div>
 
 

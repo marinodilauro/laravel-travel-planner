@@ -36,7 +36,8 @@
 
   .chips {
     position: absolute;
-    top: 24%;
+    top: 23%;
+    left: -2%;
     z-index: 4;
     display: flex;
     flex-wrap: wrap;
@@ -79,6 +80,13 @@
   height: 100%;
   z-index: 0;
   transition: top 0.3s ease;
+}
+
+#exitStreetView {
+  display: none;
+  z-index: 1000;
+  border: none;
+  background-color: transparent;
 }
 
 .mapboxgl-popup-anchor-right {
@@ -243,11 +251,11 @@
 
 // Week Days
 .days {
-  width: 100vw;
-  margin-left: calc((100vw - 100%) / 2);
+  width: 100%;
   display: flex;
   gap: 0.5rem;
   overflow-x: auto;
+  white-space: nowrap;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 10px;
