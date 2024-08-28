@@ -55,19 +55,46 @@ class StageController extends Controller
             $val_data['photo'] = $image_path;
         }
 
-        // Geocoding the position
-        $response = Http::get("https://api.tomtom.com/search/2/geocode/{$request->place}.json", [
-            'key' => '7Ja8sBNIfLOZqGSKQ0JmEQeYrsKGdGsw'
-        ]);
+        // Geocode only if the place does not have coordinates
+        /*         if (empty($val_data['latitude']) || empty($val_data['longitude'])) {
+            $response = Http::get('https://api.tomtom.com/search/2/search/' . urlencode($val_data['place']) . '.json', [
+                'key' => '7Ja8sBNIfLOZqGSKQ0JmEQeYrsKGdGsw',
+                'limit' => 1
+            ]);
 
-        // Manage geocoding
-        if ($response->successful() && !empty($response->json()['results'])) {
-            $location = $response->json()['results'][0]['position'];
-            $val_data['latitude'] = $location['lat'];
-            $val_data['longitude'] = $location['lon'];
-        } else {
-            // Geocoding failed
-            return redirect()->back()->withErrors(['place' => 'Unable to geocode the provided location. Please enter a valid address or place.']);
+            // Geocoding manage
+            if ($response->successful() && !empty($response->json()['results'])) {
+                $location = $response->json()['results'][0]['position'];
+                $val_data['latitude'] = $location['lat'];
+                $val_data['longitude'] = $location['lon'];
+            } else {
+                // Geocoding failed
+                return redirect()->back()->withErrors(['place' => 'Unable to geocode the provided location. Please enter a valid address or place.']);
+            }
+        } */
+
+        // Esegui la geocodifica solo se il luogo non ha già coordinate
+        if (empty($val_data['latitude']) || empty($val_data['longitude'])) {
+            $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
+                'address' => $val_data['place'],
+                'key' => env('GOOGLE_MAPS_API_KEY'),
+            ]);
+            // dd($response->json());
+            // Debug della risposta
+            if ($response->failed()) {
+                return redirect()->back()->withErrors(['place' => 'Google Maps API request failed.']);
+            }
+
+            $responseData = $response->json();
+
+            if (!empty($responseData['results'])) {
+                $location = $responseData['results'][0]['geometry']['location'];
+                $val_data['latitude'] = $location['lat'];
+                $val_data['longitude'] = $location['lng'];
+            } else {
+                // Geocodifica fallita
+                return redirect()->back()->withErrors(['place' => 'Unable to geocode the provided location. Please enter a valid address or place.']);
+            }
         }
 
         //Create the stage

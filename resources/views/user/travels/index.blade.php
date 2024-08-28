@@ -57,7 +57,7 @@
 
   {{-- Travel list --}}
 
-  <div class="row">
+  <div class="row row-cols-1">
     @forelse ($travels as $travel)
       <div class="col">
         <div class="travel_card">

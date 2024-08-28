@@ -20,6 +20,10 @@
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox-web.js">
     </script>
 
+    {{-- Google Place CDN --}}
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcNonuONLLYOujF_Di6-kYLDsCQB7A2Tg&libraries=places"></script>
+
     <!-- Favicon -->
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 

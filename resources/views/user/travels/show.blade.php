@@ -49,18 +49,19 @@
       </div>
     </div>
 
+    {{-- Map --}}
     <div id="map" class="map"></div>
   </div>
 
 
 
   {{-- Travel details --}}
-
   <div class="travel_details">
 
     <button id="drag_handle" class="drag_handle"></button>
 
-    <div class="top_bar d-flex align-items-center py-4">
+    {{-- Top bar --}}
+    <div class="top_bar d-flex align-items-center">
 
       <span class="title roboto-medium me-auto">Organizza il tuo viaggio</span>
 
@@ -98,22 +99,24 @@
       </div>
     </div>
 
+
+    {{-- Selector: Week days --}}
+    {{--     @if ($duration > 7)
+    <div class="mb-3">
+      <select class="form-select form-select-lg week_selector py-3" name="" id="">
+        
+      </select>
+    </div>
+    @else
+    <span class="days_title">Giorni</span>
+    @endif --}}
+
     <input type="hidden" id="duration" value="{{ $duration }}">
 
-    @if ($duration > 7)
-      {{-- Selector: Week days --}}
-      <div class="mb-3">
-        <select class="form-select form-select-lg weekselector py-3" name="" id="">
+    {{-- Day list --}}
+    <span class="days_title">Seleziona il giorno</span>
 
-        </select>
-      </div>
-    @else
-      <span class="days_title">Giorni</span>
-    @endif
-
-    {{-- Week days --}}
-    <div class="week_days row row-cols-4 g-2 mt-2">
-
+    <div class="days mt-3">
       @for ($i = 0; $i < $duration; $i++)
         <div class="col">
           <div class="day_badge {{ $i == 0 ? 'selected' : '' }}" id="day-{{ $i + 1 }}"
@@ -141,22 +144,22 @@
 
 
       {{-- Stage form --}}
-      <form action="{{ route('user.stages.store', $travel->slug) }}" method="POST"
-        class="add_stage_form w-100 d-none py-3">
+      <form action="{{ route('user.stages.store', $travel->slug) }}" method="POST" class="add_stage_form w-100 d-none">
         @csrf
 
         {{-- <input type="hidden" name="travel_id" value="{{ $travel->id }}"> --}}
 
         {{-- Campo nascosto per la data selezionata --}}
         <input type="hidden" name="day" id="day_input" value="">
-        <!-- Valore di default: Giorno 1 -->
+
 
         <div class="input_wrapper mb-1 row">
           <label for="place" class="input_label">{{ __('Tappa') }}</label>
+          <ul id="suggestions" class="list_group"></ul> {{-- Contenitore per i suggerimenti --}}
 
           <div class="col-md-6">
             <input id="place" type="text" class="form-control @error('place') is-invalid @enderror" name="place"
-              value="{{ old('place') }}" required autocomplete="place" autofocus>
+              required autocomplete="place" autofocus placeholder="Inserisci il luogo">
 
             @error('place')
               <span class="invalid-feedback" role="alert">
@@ -194,7 +197,6 @@
 
         </div>
       </form>
-
 
 
       {{-- Stage list --}}
@@ -276,15 +278,42 @@
 
             </div>
           </div>
+        @empty
+          <h5 class="no_stages text-center">Non hai aggiunto ancora nessuna tappa</h5>
+        @endforelse
       </div>
-    @empty
 
-      <h5 class="text-center">Non hai aggiunto ancora nessuna tappa</h5>
-      @endforelse
     </div>
 
-  </div>
+    <script>
+      //  Tappe recuperate dal backend per inviarle al file javascript 
+      window.travelStages = @json($travel->stages);
+      console.log(window.travelStages);
 
+      //  Centro della mappa impostato sulla posizione della prima tappa, se esiste 
+      window.firstStageCoordinates =
+        @if ($firstStage)
+          {
+            latitude: {{ $firstStage->latitude }},
+            longitude: {{ $firstStage->longitude }}
+          }
+        @else
+          null
+        @endif ;
+
+      //  Centro della mappa impostato sulla destinazione del viaggio 
+      window.destinationCoordinates =
+        @if (!$firstStage)
+          {
+            latitude: {{ $destinationCoordinates['lat'] }},
+            longitude: {{ $destinationCoordinates['lon'] }}
+          }
+        @else
+          null
+        @endif ;
+    </script>
+
+  @endsection
   <!-- Modal Body -->
   <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
   <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -323,42 +352,12 @@
     </div>
   </div>
 
-  <script>
-    //  Tappe recuperate dal backend per inviarle al file javascript 
-    window.travelStages = @json($travel->stages);
-
-
-    //  Centro della mappa impostato sulla posizione della prima tappa, se esiste 
-    window.firstStageCoordinates =
-      @if ($firstStage)
-        {
-          latitude: {{ $firstStage->latitude }},
-          longitude: {{ $firstStage->longitude }}
-        }
-      @else
-        null
-      @endif ;
-
-    //  Centro della mappa impostato sulla destinazione del viaggio 
-    window.destinationCoordinates =
-      @if (!$firstStage)
-        {
-          latitude: {{ $destinationCoordinates['lat'] }},
-          longitude: {{ $destinationCoordinates['lon'] }}
-        }
-      @else
-        null
-      @endif ;
-  </script>
-
-@endsection
-
-@section('scripts')
-  @vite('resources/js/partials/accordion.js')
-  @vite('resources/js/partials/day_badge.js')
-  @vite('resources/js/partials/week_selector.js')
-  @vite('resources/js/partials/add_stage.js')
-  @vite('resources/js/partials/map.js')
-  @vite('resources/js/partials/dragging.js')
-  @vite('resources/js/partials/modal.js')
-@endsection
+  @section('scripts')
+    @vite('resources/js/partials/google_maps_API.js')
+    @vite('resources/js/partials/google_place_suggestion.js')
+    @vite('resources/js/partials/accordion.js')
+    @vite('resources/js/partials/day_badge.js')
+    @vite('resources/js/partials/add_stage.js')
+    @vite('resources/js/partials/dragging.js')
+    @vite('resources/js/partials/modal.js')
+  @endsection

@@ -36,7 +36,7 @@
 
   .chips {
     position: absolute;
-    top: 22%;
+    top: 24%;
     z-index: 4;
     display: flex;
     flex-wrap: wrap;
@@ -184,15 +184,32 @@
 
 // Top bar
 .top_bar {
+  padding: 0.5rem 0 1rem 0;
+
   .title {
     font-size: 1.1rem;
   }
+
+  .map_btn {
+    border: none;
+    border-radius: 100%;
+    aspect-ratio: 1;
+    background-color: transparent;
+    padding: 0.3rem 0.4rem;
+    line-height: 0px;
+
+    &.active {
+      background-color: $color-primary;
+      color: white;
+    }
+  }
+
 }
 
 // Accordion
 .accordion {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   background-color: $color-tertiary;
   border-radius: 10px;
 
@@ -207,9 +224,14 @@
       overflow: hidden;
       font-size: 0.9rem;
       transition: all 0.5s ease-in-out;
+
+      p {
+        margin: 0;
+      }
     }
 
     &.active .accordion_content {
+      padding-top: 0.5rem;
       max-height: 200px;
     }
 
@@ -220,18 +242,25 @@
 }
 
 // Week Days
-.week_days {
+.days {
+  width: 100vw;
+  margin-left: calc((100vw - 100%) / 2);
   display: flex;
-  flex-wrap: wrap;
-
+  gap: 0.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 10px;
 
   .day_badge {
-    display: flex;
-    justify-content: center;
+    flex: 0 0 auto;
+    min-width: 65px;
+    text-align: center;
+    cursor: pointer;
     align-items: center;
     border: 1px solid #79747E;
     border-radius: 8px;
-    padding: 0.2rem 0rem;
+    padding: 0.2rem 0.6rem;
     font-size: 0.9rem;
     font-weight: 450;
 
@@ -250,6 +279,25 @@
 .days_title {
   font-weight: 500;
   color: #49454F;
+}
+
+// Stage form
+#suggestions {
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+
+  #suggestions .list_group_item {
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
 }
 
 // Stage cards
