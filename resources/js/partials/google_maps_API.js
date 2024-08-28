@@ -93,38 +93,96 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  // Array per tenere traccia dei popup attivi
+  let activeOverlays = [];
+
+  // Popup custom con la classe CustomOverlay
+  class CustomOverlay extends google.maps.OverlayView {
+    constructor(position, content, map) {
+      super();
+      this.position = position;
+      this.content = content;
+      this.map = map;
+      this.div = null;
+      this.setMap(map);
+      activeOverlays.push(this); // Aggiunge l'overlay attuale alla lista degli overlay attivi
+    }
+
+    onAdd() {
+      const div = document.createElement('div');
+      div.className = 'custom-overlay';
+      div.innerHTML = this.content;
+      this.div = div;
+
+      const panes = this.getPanes();
+      panes.overlayLayer.appendChild(div);
+    }
+
+    draw() {
+      if (this.div) {
+        const projection = this.getProjection();
+        const position = projection.fromLatLngToDivPixel(this.position);
+        this.div.style.left = position.x + 'px';
+        this.div.style.top = position.y + 'px';
+      }
+    }
+
+    onRemove() {
+      if (this.div) {
+        this.div.parentNode.removeChild(this.div);
+        this.div = null;
+      }
+    }
+
+    // Funzione per chiudere l'overlay
+    close() {
+      this.setMap(null); // Rimuove l'overlay dalla mappa
+    }
+  }
+
+  const closeAllOverlays = () => {
+    activeOverlays.forEach(overlay => overlay.close());
+    activeOverlays = []; // Svuota l'array degli overlay attivi
+  };
+
   // Tappe recuperate dal backend (Laravel)
   const stages = window.travelStages;
 
   stages.forEach(stage => {
 
-    console.log('Tappa:', stage);
+    // console.log('Tappa:', stage);
 
     const latitude = parseFloat(stage.latitude);
     const longitude = parseFloat(stage.longitude);
 
     if (!isNaN(latitude) && !isNaN(longitude)) {
 
-      console.log('Aggiungo marker per la tappa con coordinate:', latitude, longitude);
+      // console.log('Aggiungo marker per la tappa con coordinate:', latitude, longitude);
 
       const marker = new google.maps.Marker({
         position: { lat: latitude, lng: longitude },
         map: map,
         title: stage.place
-        // Nessuna icona personalizzata specificata, viene usato il marker predefinito
+        // Nessuna icona personalizzata specificata, per ora uso il marker predefinito
       });
 
       // Aggiungi un popup al marker
-      const infowindow = new google.maps.InfoWindow({
-        content: stage.place,
-      });
-
       marker.addListener('click', function () {
-        infowindow.open(map, marker);
+        closeAllOverlays(); // Chiudi tutti gli overlay aperti prima di aprirne uno nuovo
+        new CustomOverlay(
+          marker.getPosition(),
+          `<div class="custom-overlay-content">${stage.place}</div>`,
+          map
+        );
       });
     }
   });
-  console.log(map);
+
+  // Chiude tutti gli overlay se si clicca sulla mappa (fuori dai marker)
+  map.addListener('click', function () {
+    closeAllOverlays();
+  });
+
   // Se non ci sono tappe, centra la mappa sulla destinazione del viaggio
   if (stages.length === 0 && window.destinationCoordinates) {
     map.setCenter({
