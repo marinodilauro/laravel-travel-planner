@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Limita il movimento tra il 38% e il 70% della viewport
       const minTop = window.innerHeight * 0.38;
-      const maxTop = window.innerHeight * 0.7;
+      const maxTop = window.innerHeight * 0.73;
       newTop = Math.max(minTop, Math.min(maxTop, newTop));
 
       detailsSection.style.top = `${newTop}px`;
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
       map.style.top = `${newMapTop}vh`;
 
       // Calcola e imposta la nuova posizione per i chips
-      const newChipsTop = 23 + (32 * relativePosition); // Tra 22% e 54%
+      const newChipsTop = 25 + (34.7 * relativePosition); // Tra 22% e 54%
       chips.style.top = `${newChipsTop}%`;
     }
   });
@@ -64,16 +64,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (currentTop === '38vh') {
 
-      detailsSection.style.top = '70vh';
-      headerImage.style.height = '70vh'; // Riduci l'altezza dell'immagine/mappa
+      detailsSection.style.top = '73vh';
+      headerImage.style.height = '73vh'; // Riduci l'altezza dell'immagine/mappa
       map.style.top = '-10vh'; // Riduci l'altezza dell'immagine/mappa
-      chips.style.top = '55%';
+      chips.style.top = '59.7%';
     } else {
 
       detailsSection.style.top = '38vh';
       headerImage.style.height = '38vh'; // Aumenta l'altezza dell'immagine/mappa
       map.style.top = '-28vh'; // Aumenta l'altezza dell'immagine/mappa
-      chips.style.top = '23%';
+      chips.style.top = '25%';
     }
 
   });
