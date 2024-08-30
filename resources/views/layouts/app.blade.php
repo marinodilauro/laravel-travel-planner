@@ -8,17 +8,15 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Travel Planner') }}</title>
+    <title>{{ config('app.name', 'Travelog') }}</title>
 
-    {{-- TomTom CDN --}}
-    <link rel="stylesheet" type="text/css" href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps.css" />
-    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps-web.min.js"></script>
-    <link rel="stylesheet" type="text/css"
-      href="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox.css" />
-    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.1.2-public-preview.15/services/services-web.min.js">
-    </script>
-    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/plugins/SearchBox/3.1.3-public-preview.0/SearchBox-web.js">
-    </script>
+    {{-- Manifest Link --}}
+    <link rel="manifest" href="/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="msapplication-starturl" content="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#e5e5e5">
 
     {{-- Google Place CDN --}}
     <script async defer
@@ -37,6 +35,29 @@
     {{-- Google Icons --}}
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!-- Registrazione del service worker e gestione del prompt di installazione -->
+    <script>
+      let deferredInstallPrompt;
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+              console.log('ServiceWorker registration:', registration.scope);
+            })
+            .catch(function(error) {
+              console.log('ServiceWorker registration failed:', error);
+            });
+        });
+      }
+
+      window.addEventListener('beforeinstallprompt', function(evt) {
+        evt.preventDefault();
+        deferredInstallPrompt = evt;
+        deferredInstallPrompt.prompt();
+      });
+    </script>
 
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])

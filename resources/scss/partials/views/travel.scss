@@ -219,6 +219,7 @@
   }
 
   .map_btn {
+    appearance: none; // Rimuove gli stili predefiniti del browser
     border: none;
     border-radius: 100%;
     aspect-ratio: 1;

@@ -1,3 +1,8 @@
+/**
+ * L'installazione viene attivata quando la registrazione del service worker ha successo.
+ * Dopo l'installazione, il browser tenta di attivare il service worker.
+ * Si mettono in cache le risorse statiche che consentono alla PWA di funzionare offline.
+ */
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open('app-cache').then(cache => {
@@ -20,3 +25,4 @@ self.addEventListener('fetch', event => {
     })
   );
 });
+
