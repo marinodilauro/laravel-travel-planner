@@ -11,9 +11,9 @@
     </div>
 
     <div class="caption text-center roboto-medium p-3 mb-3">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, dolores illum et debitis deserunt eius ut, enim
-      mollitia
-      natus fuga doloremque unde fugit earum repellat ratione quisquam tempora? Incidunt, dolorum.
+      Benvenuto su Travelog, la soluzione ideale per organizzare i tuoi viaggi.
+      Accedi o iscriviti per gestire facilmente i tuoi itinerari e pianificare ogni dettaglio con precisione ed
+      efficienza.
     </div>
 
     <div class="d-flex flex-column align-items-center gap-3 flex-row-md w-100">
