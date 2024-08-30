@@ -2,7 +2,7 @@
 
 **Travelog** è la tua app di fiducia per pianificare e organizzare i viaggi! 🎒 <br>
 Con Travelog, puoi creare itinerari dettagliati, aggiungere tappe ai tuoi viaggi e visualizzare tutto su una mappa interattiva. <br>
-L'app è ottimizzata per funzionare anche offline grazie alla sua integrazione come Progressive Web App (PWA).
+L'app è ottimizzata per funzionare anche offline grazie alla sua Progressive Web App (PWA).
 
 ## 🚀 Funzionalità
 
