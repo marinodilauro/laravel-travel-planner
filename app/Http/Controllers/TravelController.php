@@ -19,7 +19,8 @@ class TravelController extends Controller
      */
     public function index()
     {
-        return view('user.travels.index', ['travels' => Travel::all()]);
+        $travels = Travel::where('user_id', '=', Auth::id())->orderBy('created_at', 'desc')->get();
+        return view('user.travels.index', compact('travels'));
     }
 
     /**

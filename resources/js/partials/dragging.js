@@ -8,10 +8,32 @@ document.addEventListener("DOMContentLoaded", function () {
   let isDragging = false;
   let startY = 0;
   let startTop = 0;
+  let isAtBottom = false;
 
   // Setta la posizione della mappa al caricamento della pagina
   map.style.top = '-28vh';
-  headerImage.style.height = '38vh';
+
+  // Al click sul bottone, alterna l'altezza tra 38vh e 70vh
+  dragHandle.addEventListener('click', function () {
+
+    if (isAtBottom) {
+      console.log('La sezione è a 75vh, la riporto a 38vh');
+      detailsSection.style.top = '38vh';
+      headerImage.style.top = '38vh'; // Aumenta l'altezza dell'immagine/mappa
+      map.style.top = '-28vh'; // Aumenta l'altezza dell'immagine/mappa
+      chips.style.top = '27vh';
+    } else {
+      console.log('La sezione è a 38vh, la sposto a 75vh');
+      detailsSection.style.top = '75vh';
+      headerImage.style.top = '75vh'; // Riduci l'altezza dell'immagine/mappa
+      map.style.top = '-10vh'; // Riduci l'altezza dell'immagine/mappa
+      chips.style.top = '64vh';
+    }
+
+    // Inverti lo stato
+    isAtBottom = !isAtBottom;
+
+  });
 
   // Avvia il trascinamento tenendo premuto sulla handle
   dragHandle.addEventListener('mousedown', function (event) {
@@ -28,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Limita il movimento tra il 38% e il 70% della viewport
       const minTop = window.innerHeight * 0.38;
-      const maxTop = window.innerHeight * 0.73;
+      const maxTop = window.innerHeight * 0.75;
       newTop = Math.max(minTop, Math.min(maxTop, newTop));
 
       detailsSection.style.top = `${newTop}px`;
@@ -37,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const relativePosition = (newTop - minTop) / (maxTop - minTop);
 
       // Calcola e imposta la nuova altezza per headerImage
-      const newHeight = 38 + (32 * relativePosition); // Tra 38vh e 70vh
+      const newHeight = 38 + (37 * relativePosition); // Tra 38vh e 75vh
       headerImage.style.height = `${newHeight}vh`;
 
       // Calcola e imposta la nuova posizione per la mappa
@@ -45,8 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
       map.style.top = `${newMapTop}vh`;
 
       // Calcola e imposta la nuova posizione per i chips
-      const newChipsTop = 25 + (34.7 * relativePosition); // Tra 22% e 54%
-      chips.style.top = `${newChipsTop}%`;
+      const newChipsTop = 27 + (37 * relativePosition); // Tra 27% e 64%
+      chips.style.top = `${newChipsTop}vh`;
     }
   });
 
@@ -57,24 +79,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Al click sul bottone, alterna l'altezza tra 38vh e 70vh
-  dragHandle.addEventListener('click', function () {
 
-    const currentTop = detailsSection.style.top;
-
-    if (currentTop === '38vh') {
-
-      detailsSection.style.top = '73vh';
-      headerImage.style.height = '73vh'; // Riduci l'altezza dell'immagine/mappa
-      map.style.top = '-10vh'; // Riduci l'altezza dell'immagine/mappa
-      chips.style.top = '59.7%';
-    } else {
-
-      detailsSection.style.top = '38vh';
-      headerImage.style.height = '38vh'; // Aumenta l'altezza dell'immagine/mappa
-      map.style.top = '-28vh'; // Aumenta l'altezza dell'immagine/mappa
-      chips.style.top = '25%';
-    }
-
-  });
 });

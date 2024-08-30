@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Se esistono le coordinate della prima tappa, centra la mappa su di esse
   if (window.firstStageCoordinates) {
-    console.log(firstStageCoordinates);
+    // console.log(firstStageCoordinates);
     map.setCenter({
       lat: window.firstStageCoordinates.latitude,
       lng: window.firstStageCoordinates.longitude,
@@ -83,10 +83,11 @@ document.addEventListener('DOMContentLoaded', function () {
       travelImage.style.display = 'block';
       foreground.style.display = 'block';
       mapDiv.style.display = 'none';
+      mapDiv.style.top = '-28vh';
       dragHandle.style.display = 'none';
       detailsSection.style.borderRadius = '0';
       detailsSection.style.top = '38vh';
-      chips.style.top = '24%';
+      chips.style.top = '27%';
       headerImage.style.height = '38vh';
       mapBtn.classList.remove('active');
 

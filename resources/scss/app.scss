@@ -1,6 +1,9 @@
 @use './partials/variables' as *;
 @import '~bootstrap/scss/bootstrap';
-@import './partials/fonts/roboto.scss';
+@import 'partials/fonts/roboto';
+@import 'partials/views/register';
+@import 'partials/views/homepage';
+@import 'partials/views/travel';
 
 * {
   margin: 0;
@@ -11,7 +14,6 @@
 body {
   font-family: "Roboto", sans-serif;
 }
-
 
 .image_container {
   width: 80%;
@@ -27,7 +29,6 @@ body {
 
 .calendar_icon {
   font-variation-settings: 'FILL' 1;
-
 }
 
 .add_btn,
@@ -36,9 +37,7 @@ body {
   border-radius: 100%;
   aspect-ratio: 1;
   background-color: transparent;
-
 }
-
 
 
 .button_style {

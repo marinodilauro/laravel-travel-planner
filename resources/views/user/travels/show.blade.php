@@ -10,12 +10,12 @@
 @section('content')
 
   {{-- Travel image --}}
-  <div class="header_image">
+  <div class="header_image" style="top: 38vh; height:38vh;">
 
     <div class="title_bar d-flex align-items-center w-100 px-3">
 
       <button class="back_btn me-3">
-        <a class="text-decoration-none text-dark" href="{{ url()->previous() }}">
+        <a class="text-decoration-none text-dark" href="{{ route('user.travels.index') }}">
           <span class="material-symbols-outlined">
             arrow_back
           </span>
@@ -64,7 +64,7 @@
 
 
   {{-- Travel details --}}
-  <div class="travel_details">
+  <div class="travel_details" style="top: 38vh">
 
     <button id="drag_handle" class="drag_handle"></button>
 
@@ -208,84 +208,8 @@
 
 
       {{-- Stage list --}}
-      <div class="row row-cols-1 gap-3 py-3">
+      <div id="stage_container" class="row row-cols-1 gap-3 py-3">
         @forelse ($travel->stages as $stage)
-          <div class="col">
-            <div class="stage_card" data_day="{{ $stage->day }}">
-
-              <a class="d-flex text-decoration-none text-dark p-0 flex-fill"
-                href="{{ route('user.stages.show', $stage) }}">
-                {{-- Card image --}}
-                <div class="card_image">
-                  @if ($stage->photo)
-                    <img class="img-fluid" loading="lazy" src="{{ asset('storage/' . $stage->photo) }}" alt="">
-                  @else
-                    <img class="img-fluid" loading="lazy" src="/storage/img/placeholder_image.png" alt="">
-                  @endif
-                </div>
-
-                {{-- Card body --}}
-                <div class="card_body d-flex flex-column justify-content-between py-2 px-3">
-                  <span class="travel_name pb-2">
-                    {{ $stage->place }}
-                  </span>
-
-                  <div class="d-flex flex-column gap-1">
-                    <div class="roboto-regular d-flex justify-content-start align-items-center">
-                      <span class="destination_icon material-symbols-outlined me-1">today</span>
-                      <span class="text-secondary">{{ $stage->day }}</span>
-                    </div>
-
-                    <div class="roboto-regular d-flex justify-content-start align-items-center">
-                      <p>{{ $stage->note }}</p>
-                    </div>
-                  </div>
-
-                </div>
-              </a>
-
-              {{-- Card actions --}}
-              <div class="card_actions align-self-start mt-4">
-                <div class="dropdown d-flex  align-items-center justify-content-start gap-2 ps-2 p-1">
-
-                  <span data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    class="actions_icon material-symbols-outlined">
-                    more_vert
-                  </span>
-
-                  <ul class="dropdown-menu">
-
-                    {{-- Edit action --}}
-                    <li class="d-flex align-items-center ms-3">
-                      <span class="material-symbols-outlined">
-                        edit
-                      </span>
-                      <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Modifica') }}</a>
-                    </li>
-
-                    {{-- Delete actions --}}
-
-                    <li class="d-flex align-items-center ms-3">
-
-                      <!-- Modal trigger button -->
-                      <span class="material-symbols-outlined">
-                        delete
-                      </span>
-                      <a class="dropdown-item open_modal_btn" data-bs-toggle="modal" data-bs-target="#modalId"
-                        data-stage="{{ $stage }}" data-stage-id="{{ $stage->id }}"
-                        data-stage-place="{{ $stage->place }}">
-                        Elimina
-                      </a>
-
-                    </li>
-
-                  </ul>
-
-                </div>
-              </div>
-
-            </div>
-          </div>
         @empty
           <h5 class="no_stages text-center">Non hai aggiunto ancora nessuna tappa</h5>
         @endforelse

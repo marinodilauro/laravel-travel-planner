@@ -5,13 +5,111 @@ document.addEventListener("DOMContentLoaded", function () {
   const dayInput = document.getElementById('day_input'); // Input nascosto per il giorno
   const stageItems = document.querySelectorAll('.stage_card'); // Gli elementi della lista degli stage
   const badgesContainer = document.querySelector('.days'); // Contenitore dei badge
+  const stageContainer = document.getElementById('stage_container');
+
+  const stages = window.travelStages;  // Qui recuperiamo i dati passati dal Blade
 
   // Mostra solo gli stage del giorno selezionato
   function filterStagesByDay(selectedDay) {
-    stageItems.forEach(item => {
-      item.style.display = item.getAttribute('data_day') === selectedDay ? 'flex' : 'none';
+
+    // RSvuota lo stage_container
+    stageContainer.innerHTML = '';
+
+    // Filtra e aggiungi solo gli stage del giorno selezionato
+    const filteredStages = stages.filter(stage => stage.day === selectedDay);
+
+    filteredStages.forEach(stage => {
+      const stageElement = document.createElement('div');
+      stageElement.classList.add('col');
+      stageElement.innerHTML = `
+
+            <div class="stage_card" data_day="${stage.day}" data-stage-id="${stage.id}">
+
+              <a class="d-flex text-decoration-none text-dark p-0 flex-fill"
+                href="/user/stages/${stage.slug}">
+
+                <!-- Card image -->
+                <div class="card_image">
+                    ${stage.photo ?
+          `<img class="img-fluid" loading="lazy" src="/storage/${stage.photo}" alt="">` :
+          `<img class="img-fluid" loading="lazy" src="/storage/img/placeholder_image.png" alt="">`
+        }
+                </div>
+
+                <!-- Card body -->
+                <div class="card_body d-flex flex-column py-2 px-3">
+                  <span class="travel_name pb-2">
+                    ${stage.place}
+                  </span>
+
+                  <div class="d-flex flex-column gap-1">
+                    <div class="roboto-regular d-flex justify-content-start align-items-center">
+                      <span class="destination_icon material-symbols-outlined me-1">today</span>
+                      <span class="text-secondary">${stage.day}</span>
+                    </div>
+
+                    ${stage.note ?
+          `<div class="roboto-regular d-flex justify-content-start align-items-center">
+                          <p>${stage.note}</p>
+                        </div>` :
+          ''
+        }
+                  </div>
+
+                </div>
+              </a>
+
+              <!-- Card actions -->
+              <div class="card_actions align-self-start mt-4">
+                <div class="dropdown d-flex  align-items-center justify-content-start gap-2 ps-2 p-1">
+
+                  <span data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    class="actions_icon material-symbols-outlined">
+                    more_vert
+                  </span>
+
+                  <ul class="dropdown-menu">
+
+                    <!-- Edit action -->
+                    <li class="d-flex align-items-center ms-3">
+                      <span class="material-symbols-outlined">
+                        edit
+                      </span>
+                      <a class="dropdown-item"  href="/profile">{{ __('Modifica') }}</a>
+                    </li>
+
+                    <!-- Delete actions -->
+
+                    <li class="d-flex align-items-center ms-3">
+
+                      <!-- Modal trigger button -->
+                      <span class="material-symbols-outlined">
+                        delete
+                      </span>
+                      <a class="dropdown-item open_modal_btn" data-bs-toggle="modal" data-bs-target="#modalId"
+                        data-stage="${stage}" data-stage-id="${stage.id}"
+                        data-stage-place="${stage.place}">
+                        Elimina
+                      </a>
+
+                    </li>
+
+                  </ul>
+
+                </div>
+              </div>
+
+            </div>
+
+      `;
+
+      stageContainer.appendChild(stageElement);
+
     });
+    // console.log('Filtered Stages:', filteredStages); // Per debugging, mostra gli stage filtrati in console
   }
+
+
 
   // Seleziona il badge del primo giorno
   if (dayBadges.length > 0) {
@@ -26,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Aggiungi un event listener al click di ciascun badge
   dayBadges.forEach((badge, index) => {
     badge.addEventListener('click', () => {
-
+      console.log('badge clicked!');
       // Rimuovi la classe 'selected' da tutti i badge
       dayBadges.forEach(b => b.classList.remove('selected'));
 
