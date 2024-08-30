@@ -1,6 +1,6 @@
 {
-  "name": "Pocket Journey",
-  "short_name": "PJApp",
+  "name": "Travelog",
+  "short_name": "Travelog",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
