@@ -50,7 +50,9 @@ document.addEventListener('DOMContentLoaded', function () {
       lat: window.destinationCoordinates.latitude,
       lng: window.destinationCoordinates.longitude,
     });
+    console.log(window.destinationCoordinates);
   }
+  console.log(mapOptions);
 
   // Toggle mappa/immagine di copertina del viaggio
   const mapBtn = document.querySelector('.map_btn');
@@ -87,10 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
       dragHandle.style.display = 'none';
       detailsSection.style.borderRadius = '0';
       detailsSection.style.top = '38vh';
-      chips.style.top = '27%';
+      chips.style.top = '26vh';
       headerImage.style.height = '38vh';
       mapBtn.classList.remove('active');
-
     }
   });
 

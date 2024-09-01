@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const stage = this.getAttribute('data-stage');
       const stageId = this.getAttribute('data-stage-id');
       const stagePlace = this.getAttribute('data-stage-place');
-
+      console.log(stagePlace);
       modalPlace.textContent = stagePlace;
 
       // Modifica l'azione del form per includere l'ID della tappa da eliminare

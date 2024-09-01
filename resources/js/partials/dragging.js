@@ -19,15 +19,15 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isAtBottom) {
       console.log('La sezione è a 75vh, la riporto a 38vh');
       detailsSection.style.top = '38vh';
-      headerImage.style.top = '38vh'; // Aumenta l'altezza dell'immagine/mappa
+      headerImage.style.height = '38vh'; // Aumenta l'altezza dell'immagine/mappa
       map.style.top = '-28vh'; // Aumenta l'altezza dell'immagine/mappa
-      chips.style.top = '27vh';
+      chips.style.top = '26vh';
     } else {
       console.log('La sezione è a 38vh, la sposto a 75vh');
       detailsSection.style.top = '75vh';
-      headerImage.style.top = '75vh'; // Riduci l'altezza dell'immagine/mappa
+      headerImage.style.height = '75vh'; // Riduci l'altezza dell'immagine/mappa
       map.style.top = '-10vh'; // Riduci l'altezza dell'immagine/mappa
-      chips.style.top = '64vh';
+      chips.style.top = '62.5vh';
     }
 
     // Inverti lo stato
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
       map.style.top = `${newMapTop}vh`;
 
       // Calcola e imposta la nuova posizione per i chips
-      const newChipsTop = 27 + (37 * relativePosition); // Tra 27% e 64%
+      const newChipsTop = 26 + (36.5 * relativePosition); // Tra 26vh e 62.5vh
       chips.style.top = `${newChipsTop}vh`;
     }
   });

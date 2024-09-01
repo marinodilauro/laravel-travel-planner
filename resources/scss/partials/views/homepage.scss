@@ -14,8 +14,11 @@
   a {
     .card_image {
       flex-basis: 25%;
+      height: 90px;
 
       img {
+        height: 100%;
+        width: 100%;
         border-radius: 1.3rem;
         object-fit: cover;
       }

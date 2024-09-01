@@ -64,12 +64,22 @@
 
           <a class="d-flex gap-3 text-decoration-none text-dark p-0 flex-fill"
             href="{{ route('user.travels.show', $travel) }}">
+
             {{-- Card image --}}
             <div class="card_image">
               @if ($travel->photo)
-                <img class="img-fluid" loading="lazy" src="{{ asset('storage/' . $travel->photo) }}" alt="">
+                @if (Str::startsWith($travel->photo, 'http'))
+                  <!-- Se la foto è un URL esterno -->
+                  <img loading="lazy" class="travel_image" src="{{ $travel->photo }}" alt="{{ $travel->name }}">
+                @else
+                  <!-- Se la foto è un percorso locale -->
+                  <img loading="lazy" class="travel_image" src="{{ asset('storage/' . $travel->photo) }}"
+                    alt="{{ $travel->name }}">
+                @endif
               @else
-                <img class="img-fluid" loading="lazy" src="/storage/img/placeholder_image.png" alt="">
+                <!-- Se non c'è alcuna foto -->
+                <img loading="lazy" class="travel_image img-fluid" src="/storage/img/placeholder_image.png"
+                  alt="{{ $travel->name }}">
               @endif
             </div>
 

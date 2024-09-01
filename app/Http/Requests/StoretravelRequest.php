@@ -27,7 +27,7 @@ class StoreTravelRequest extends FormRequest
             'start_date' => 'required|min:5|max:150',
             'end_date' => 'required|min:5|max:150',
             'description' => 'nullable|max:250',
-            'photo' => 'nullable|image|max:2000'
+            'photo' => 'nullable|image|max:1024'
         ];
     }
 }

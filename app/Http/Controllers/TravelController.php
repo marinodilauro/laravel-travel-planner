@@ -46,24 +46,61 @@ class TravelController extends Controller
         $slug = Str::slug($request->name, '-');
         $val_data['slug'] = $slug;
 
+        // Se l'utente carica una foto, salvala
         if ($request->has('photo')) {
             $image_path = Storage::put('uploads', $val_data['photo']);
             $val_data['photo'] = $image_path;
+        } else {
+            //  Fetch photos from Google Places API
+            $google_api_key = env('GOOGLE_MAPS_API_KEY');
+            $place = $val_data['destination'];
+            $response = Http::get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json', [
+                'input' => $place,
+                'inputtype' => 'textquery',
+                'fields' => 'photos',
+                'key' => $google_api_key,
+            ]);
+
+
+            if ($response->successful() && !empty($response->json()['candidates'])) {
+                $photos = $response->json()['candidates'][0]['photos'];
+                // dd($photos);
+                // Seleziona una foto casuale dall'array di foto disponibili
+                $random_photo = $photos[array_rand($photos)];
+                $photo_reference = $random_photo['photo_reference'];
+
+                // Costruisci l'URL della foto con dimensioni specifiche
+                $photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&maxheight=600&photoreference={$photo_reference}&key={$google_api_key}";
+
+                // Salva l'URL della foto nel database
+                $val_data['photo'] = $photo_url;
+            } else {
+                $val_data['photo'] = null;  // O un'immagine di default
+            }
         }
 
-        // Geocoding the position
-        $response = Http::get("https://api.tomtom.com/search/2/geocode/{$request->destination}.json", [
-            'key' => '7Ja8sBNIfLOZqGSKQ0JmEQeYrsKGdGsw'
-        ]);
+        // Esegui la geocodifica solo se il luogo non ha già coordinate
+        if (empty($val_data['latitude']) || empty($val_data['longitude'])) {
+            $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
+                'address' => $val_data['destination'],
+                'key' => env('GOOGLE_MAPS_API_KEY'),
+            ]);
+            // dd($response->json());
+            // Debug della risposta
+            if ($response->failed()) {
+                return redirect()->back()->withErrors(['place' => 'Google Maps API request failed.']);
+            }
 
-        // Manage geocoding
-        if ($response->successful() && !empty($response->json()['results'])) {
-            $location = $response->json()['results'][0]['position'];
-            $val_data['latitude'] = $location['lat'];
-            $val_data['longitude'] = $location['lon'];
-        } else {
-            // Geocoding failed
-            return redirect()->back()->withErrors(['destination' => 'Unable to geocode the provided location. Please enter a valid address or place.']);
+            $responseData = $response->json();
+
+            if (!empty($responseData['results'])) {
+                $location = $responseData['results'][0]['geometry']['location'];
+                $val_data['latitude'] = $location['lat'];
+                $val_data['longitude'] = $location['lng'];
+            } else {
+                // Geocodifica fallita
+                return redirect()->back()->withErrors(['destination' => 'Unable to geocode the provided location. Please enter a valid destination.']);
+            }
         }
 
         // Create
@@ -90,13 +127,12 @@ class TravelController extends Controller
         // Recupera la prima tappa (se esiste)
         $firstStage = $travel->stages->first();
 
-        // Se non ci sono tappe, ottieni le coordinate della destinazione
+        // Se non ci sono tappe, utilizza le coordinate della destinazione
         if (!$firstStage) {
-            $response = Http::get("https://api.tomtom.com/search/2/geocode/{$travel->destination}.json", [
-                'key' => '7Ja8sBNIfLOZqGSKQ0JmEQeYrsKGdGsw'
-            ]);
-
-            $destinationCoordinates = $response->json()['results'][0]['position'];
+            $destinationCoordinates = [
+                'latitude' => $travel->latitude,
+                'longitude' => $travel->longitude,
+            ];
         } else {
             $destinationCoordinates = null;
         }
@@ -134,6 +170,6 @@ class TravelController extends Controller
         $travel->delete();
 
         // Redirect
-        return to_route('admin.travels.index')->with('message', "$travel->name eliminato!");
+        return to_route('user.travels.index')->with('message', "$travel->name eliminato!");
     }
 }

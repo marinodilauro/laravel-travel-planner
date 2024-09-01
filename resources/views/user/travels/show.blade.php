@@ -35,9 +35,17 @@
     </div>
 
     @if ($travel->photo)
-      <img loading="lazy" class="travel_image img-fluid" src="{{ asset('storage/' . $travel->photo) }}" alt="">
+      @if (Str::startsWith($travel->photo, 'http'))
+        <!-- Se la foto è un URL esterno -->
+        <img loading="lazy" class="travel_image" src="{{ $travel->photo }}" alt="{{ $travel->name }}">
+      @else
+        <!-- Se la foto è un percorso locale -->
+        <img loading="lazy" class="travel_image" src="{{ asset('storage/' . $travel->photo) }}" alt="{{ $travel->name }}">
+      @endif
     @else
-      <img loading="lazy" class="travel_image img-fluid" src="/storage/img/placeholder_image.png" alt="">
+      <!-- Se non c'è alcuna foto -->
+      <img loading="lazy" class="travel_image img-fluid" src="/storage/img/placeholder_image.png"
+        alt="{{ $travel->name }}">
     @endif
 
     <div class="foreground"></div>
@@ -163,7 +171,6 @@
 
         <div class="input_wrapper mb-1 row">
           <label for="place" class="input_label">{{ __('Tappa') }}</label>
-          <ul id="suggestions" class="list_group"></ul> {{-- Contenitore per i suggerimenti --}}
 
           <div class="col-md-6">
             <input id="place" type="text" class="form-control @error('place') is-invalid @enderror" name="place"
@@ -220,7 +227,6 @@
     <script>
       //  Tappe recuperate dal backend per inviarle al file javascript 
       window.travelStages = @json($travel->stages);
-      console.log(window.travelStages);
 
       //  Centro della mappa impostato sulla posizione della prima tappa, se esiste 
       window.firstStageCoordinates =
@@ -237,8 +243,8 @@
       window.destinationCoordinates =
         @if (!$firstStage)
           {
-            latitude: {{ $destinationCoordinates['lat'] }},
-            longitude: {{ $destinationCoordinates['lon'] }}
+            latitude: {{ $destinationCoordinates['latitude'] }},
+            longitude: {{ $destinationCoordinates['longitude'] }}
           }
         @else
           null

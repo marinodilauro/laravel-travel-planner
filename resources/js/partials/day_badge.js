@@ -31,8 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 <!-- Card image -->
                 <div class="card_image">
                     ${stage.photo ?
-          `<img class="img-fluid" loading="lazy" src="/storage/${stage.photo}" alt="">` :
-          `<img class="img-fluid" loading="lazy" src="/storage/img/placeholder_image.png" alt="">`
+
+          (stage.photo.startsWith(stage.photo, 'http') ?
+            `<img class="img-fluid" loading="lazy" src="${stage.photo}" alt="${stage.place}">` :
+            `<img class="img-fluid" loading="lazy" src="/storage/${stage.photo}" alt="${stage.place}">`
+          ) :
+          `<img class="img-fluid" loading="lazy" src="/storage/img/placeholder_image.png" alt="${stage.place}">`
         }
                 </div>
 
@@ -75,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       <span class="material-symbols-outlined">
                         edit
                       </span>
-                      <a class="dropdown-item"  href="/profile">{{ __('Modifica') }}</a>
+                      <a class="dropdown-item"  href="/user/stages/${stage.slug}/edit">Modifica</a>
                     </li>
 
                     <!-- Delete actions -->

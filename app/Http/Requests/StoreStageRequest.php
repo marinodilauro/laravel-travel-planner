@@ -24,7 +24,7 @@ class StoreStageRequest extends FormRequest
         return [
             'place' => 'required|min:5|max:150',
             'note' => 'nullable|max:250',
-            'photo' => 'nullable|image|max:2000'
+            'photo' => 'nullable|image|max:1024'
         ];
     }
 }
