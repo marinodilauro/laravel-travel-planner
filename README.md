@@ -64,6 +64,6 @@ Inoltre, l'implementazione della PWA ha richiesto una gestione precisa della cac
 
 ## 🌐 Visualizzare il Progetto
 
-- **[TraveLog](#)**: Link al sito web di Travelog (https://travelog.website).
+- Link al sito web di Travelog: https://travelog.website
 
 
