@@ -1,7 +1,7 @@
-# Travelog 🌍✈️
+# TraveLog 🌍✈️
 
-**Travelog** è la tua app di fiducia per pianificare e organizzare i viaggi! 🎒 <br>
-Con Travelog, puoi creare itinerari dettagliati, aggiungere tappe ai tuoi viaggi e visualizzare tutto su una mappa interattiva. <br>
+**TraveLog** è la tua app di fiducia per pianificare e organizzare i viaggi! 🎒 <br>
+Con TraveLog, puoi creare itinerari dettagliati, aggiungere tappe ai tuoi viaggi e visualizzare tutto su una mappa interattiva. <br>
 L'app è ottimizzata per funzionare anche offline grazie alla sua Progressive Web App (PWA).
 
 ## 🚀 Funzionalità
@@ -23,26 +23,26 @@ L'app è ottimizzata per funzionare anche offline grazie alla sua Progressive We
 ## 📲 Installazione PWA
 
 ### Desktop 🖥️
-1. Visita il sito web di Travelog.
+1. Visita il sito web di TraveLog.
 2. Clicca sull'icona di installazione nel browser (solitamente nell'angolo destro della barra degli indirizzi).
 3. Conferma l'installazione per avere l'app disponibile direttamente sul tuo desktop.
 
 ### Mobile 📱
 
 #### Android 🤖
-1. Apri **Google Chrome** e visita il sito web di Travelog.
+1. Apri **Google Chrome** e visita il sito web di TraveLog.
 2. Una volta caricata la pagina, vedrai un banner in basso con l'opzione **"Aggiungi Travelog alla schermata Home"**. Se non vedi il banner:
    - Clicca sull'icona del menu (i tre puntini verticali) in alto a destra.
    - Seleziona **"Aggiungi a schermata Home"**.
 3. Apparirà un prompt che ti chiederà di confermare. Clicca su **"Aggiungi"**.
-4. L'icona di Travelog apparirà sulla schermata principale del tuo dispositivo Android. Puoi ora accedere all'app direttamente come se fosse un'app nativa.
+4. L'icona di TraveLogapparirà sulla schermata principale del tuo dispositivo Android. Puoi ora accedere all'app direttamente come se fosse un'app nativa.
 
 #### iOS (iPhone/iPad) 🍏
 1. Apri **Safari** e visita il sito web di Travelog.
 2. Clicca sul pulsante **Condividi** (l'icona con il quadrato e la freccia verso l'alto) nella barra degli strumenti in basso.
 3. Scorri il menu verso il basso e seleziona **"Aggiungi a schermata Home"**.
 4. Modifica il nome se desideri, poi clicca su **"Aggiungi"** in alto a destra.
-5. L'icona di Travelog verrà aggiunta alla schermata principale del tuo dispositivo iOS. Puoi ora accedere all'app direttamente dalla schermata home, come se fosse un'app nativa.
+5. L'icona di TraveLogverrà aggiunta alla schermata principale del tuo dispositivo iOS. Puoi ora accedere all'app direttamente dalla schermata home, come se fosse un'app nativa.
 
 ## 💪 Sfide Affrontate
 
@@ -64,6 +64,6 @@ Inoltre, l'implementazione della PWA ha richiesto una gestione precisa della cac
 
 ## 🌐 Visualizzare il Progetto
 
-- **[Travelog Sito Web](#)**: Link al sito web di Travelog (inserisci il link qui).
+- **[TraveLog](#)**: Link al sito web di Travelog (https://travelog.website).
 
 
