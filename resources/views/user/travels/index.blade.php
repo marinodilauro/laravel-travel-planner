@@ -124,7 +124,7 @@
                   <span class="material-symbols-outlined">
                     edit
                   </span>
-                  <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Modifica') }}</a>
+                  <a class="dropdown-item" href="{{ route('user.travels.edit', $travel) }}">{{ __('Modifica') }}</a>
                 </li>
 
                 {{-- Delete action --}}

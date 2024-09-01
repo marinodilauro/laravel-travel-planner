@@ -145,16 +145,81 @@ class TravelController extends Controller
      */
     public function edit(Travel $travel)
     {
-        //
+        return view('user.travels.edit', compact('travel'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTravelRequest $request, Travel $travel)
+    public function update(StoreTravelRequest $request, Travel $travel)
     {
-        //
+        // Validate
+        $val_data = $request->validated();
+
+        // Aggiorna lo slug solo se il nome del viaggio è stato cambiato
+        if ($request->name !== $travel->name) {
+            $slug = Str::slug($request->name, '-');
+            $val_data['slug'] = $slug;
+        }
+
+        // Ottieni una foto dalle API di Google Places
+        $google_api_key = env('GOOGLE_MAPS_API_KEY');
+        $destination = $val_data['destination'];
+        $response = Http::get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json', [
+            'input' => $destination,
+            'inputtype' => 'textquery',
+            'fields' => 'photos',
+            'key' => $google_api_key,
+        ]);
+
+        if ($response->successful() && !empty($response->json()['candidates'])) {
+            $photos = $response->json()['candidates'][0]['photos'];
+
+            // Seleziona una foto casuale dall'array di foto disponibili
+            $random_photo = $photos[array_rand($photos)];
+            $photo_reference = $random_photo['photo_reference'];
+
+            // Costruisci l'URL della foto con dimensioni specifiche
+            $photo_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&maxheight=600&photoreference={$photo_reference}&key={$google_api_key}";
+
+            // Salva l'URL della foto nel database
+            $val_data['photo'] = $photo_url;
+        } else {
+            $val_data['photo'] = null;  // O un'immagine di default
+        }
+
+
+        // Esegui la geocodifica solo se la destinazione è cambiata o se non ci sono coordinate
+        if (($request->destination !== $travel->destination) || empty($val_data['latitude']) || empty($val_data['longitude'])) {
+            $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
+                'address' => $val_data['destination'],
+                'key' => env('GOOGLE_MAPS_API_KEY'),
+            ]);
+
+            // Debug della risposta
+            if ($response->failed()) {
+                return redirect()->back()->withErrors(['destination' => 'Google Maps API request failed.']);
+            }
+
+            $responseData = $response->json();
+
+            if (!empty($responseData['results'])) {
+                $location = $responseData['results'][0]['geometry']['location'];
+                $val_data['latitude'] = $location['lat'];
+                $val_data['longitude'] = $location['lng'];
+            } else {
+                // Geocodifica fallita
+                return redirect()->back()->withErrors(['destination' => 'Unable to geocode the provided location. Please enter a valid address or place.']);
+            }
+        }
+
+        // Aggiorna il viaggio
+        $travel->update($val_data);
+
+        // Reindirizzamento alla pagina di visualizzazione del viaggio
+        return redirect()->route('user.travels.show', $travel->slug)->with('message', 'Viaggio aggiornato con successo!');
     }
+
 
     /**
      * Remove the specified resource from storage.
