@@ -8,8 +8,20 @@
 
 @section('content')
   <div class="container d-flex flex-column align-items-center">
+    {{-- Title bar --}}
+    <div class="title_bar d-flex justify-content-between align-items-center w-100">
 
-    <h1 class="text-center roboto-bold">Login</h1>
+      <button class="back_btn">
+        <a class="text-decoration-none text-dark" href="{{ url()->previous() }}">
+          <span class="material-symbols-outlined">
+            arrow_back
+          </span>
+        </a>
+      </button>
+
+      <h1 class="text-center roboto-bold">Login</h1>
+
+    </div>
 
     <div class="image_container">
       <img class="img-fluid" src="{{ asset('storage/img/hello.png') }}" alt="">

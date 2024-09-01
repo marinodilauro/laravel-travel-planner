@@ -14,14 +14,14 @@
     <div class="title_bar d-flex justify-content-between align-items-center w-100">
 
       <button class="back_btn">
-        <a class="text-decoration-none text-dark" href="{{ url()->previous() }}">
+        <a class="text-decoration-none text-dark" href="{{ route('user.travels.index') }}">
           <span class="material-symbols-outlined">
             arrow_back
           </span>
         </a>
       </button>
 
-      <h2 class="fs-4 my-4 flex-fill text-center">
+      <h2>
         Modifica viaggio:
       </h2>
 

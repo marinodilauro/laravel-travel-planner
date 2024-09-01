@@ -106,10 +106,7 @@
         </div>
 
         <div class="accordion_content">
-          <p>{{ $travel->description }} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam libero eum
-            in,
-            dolor deserunt sit a doloremque quo earum tempora laboriosam dolorem aliquid numquam autem omnis, neque
-            explicabo corrupti exercitationem?</p>
+          <p>{{ $travel->description }}</p>
         </div>
 
       </div>
@@ -136,7 +133,7 @@
       @for ($i = 0; $i < $duration; $i++)
         <div class="col">
           <div class="day_badge {{ $i == 0 ? 'selected' : '' }}" id="day-{{ $i + 1 }}"
-            data_date="{{ date('d/m/y', strtotime($travel->start_date . ' + ' . $i . ' days')) }}">
+            data_date="{{ date('y/m/d', strtotime($travel->start_date . ' + ' . $i . ' days')) }}">
             {{ date('d/m', strtotime($travel->start_date . ' + ' . $i . ' days')) }}
           </div>
         </div>

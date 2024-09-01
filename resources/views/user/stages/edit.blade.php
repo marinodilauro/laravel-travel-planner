@@ -21,7 +21,7 @@
         </a>
       </button>
 
-      <h2 class="fs-4 my-4 flex-fill text-center">
+      <h2>
         Modifica tappa:
       </h2>
 
