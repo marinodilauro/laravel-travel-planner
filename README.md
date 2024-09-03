@@ -4,13 +4,13 @@
 Con TraveLog, puoi creare itinerari dettagliati, aggiungere tappe ai tuoi viaggi e visualizzare tutto su una mappa interattiva. <br>
 L'app è ottimizzata per funzionare anche offline grazie alla sua Progressive Web App (PWA).
 
-## Screenshot
+## 👀 Screenshot
 
-<p align="center" style="margin: 0 0">
-  <img src="screenshot/travelog_screenshot_1.png" alt="Empty Homepage" width="25%" />
-  <img src="screenshot/travelog_screenshot_2.png" alt="Homepage with travels" width="25%" />
-  <img src="screenshot/travelog_screenshot_3.png" alt="Travel page" width="25%" />
-  <img src="screenshot/travelog_screenshot_4.png" alt="Travel page with map open" width="25%" />
+<p align="center">
+  <img src="screenshot/travelog_screenshot_1.png" alt="Empty Homepage" width="24%" />
+  <img src="screenshot/travelog_screenshot_2.png" alt="Homepage with travels" width="24%" />
+  <img src="screenshot/travelog_screenshot_3.png" alt="Travel page" width="24%" />
+  <img src="screenshot/travelog_screenshot_4.png" alt="Travel page with map open" width="24%" />
 </p>
 
 ## 🚀 Funzionalità
